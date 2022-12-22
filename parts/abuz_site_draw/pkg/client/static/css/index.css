@@ -1,0 +1,60 @@
+@import "font.css";
+@import "main.css";
+@import "main_media.css";
+
+:root {
+    --color-black: #000000;
+    --color-red: #B90000;
+    --brand-font: "Impact";
+    --bg-black: #080808;
+    --color-white: #ffffff;
+    --color-white-dark: #cbcbcb;
+    --color-gray: #E6E6E6;
+    --bg-red: #A40000;
+    --color-smoke: #FEFEFE;
+    --color-green: #19C903;
+    --color-gray-black: #3E3E3E;
+    --font: "SF Pro Display"
+}
+
+body {
+    position: relative;
+    background: var(--bg-black);
+    color: var(--color-white);
+    font-family: var(--font);
+    font-style: normal;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.back-square {
+    background-image: url("../img/fon.png");
+    background-repeat: repeat-y;
+    background-size: 111%;
+    /*background-size: 111%;
+    background-position: 70% 0;*/
+}
+
+.back-space {
+    background-image: url("../img/space.gif");
+}
+
+.my-container {
+    max-width: 1309px;
+}
+
+.mt-50px {
+    margin-top: 50px;
+}
+
+.ml-50px {
+    margin-left: 50px;
+}
+
+.mr-50px {
+    margin-right: 50px;
+}
+
+.mb-50px {
+    margin-bottom: 50px;
+}

@@ -1,0 +1,126 @@
+package {{.Package}}
+
+import (
+    "fmt"
+    {{ if .ImportModelPath }}mp "{{.ImportModelPath}}"{{ end }}
+    crudobject "teleblog/shared/axcrudobject"
+    "encoding/json"
+    "github.com/rs/zerolog"
+    "gorm.io/gorm"
+    "strings"
+)
+{{ $mp := .MediaPrefix }}
+{{ $dp := .DateMediaPrefix }}
+
+
+func {{.MethodName}}(db *gorm.DB, baseLog zerolog.Logger, opts crudobject.CrudOptions) crudobject.CrudRouterController {
+    log := baseLog.With().Str("model", "{{.Name}}").Logger()
+    if err := db.AutoMigrate(&{{.Model}}{}); err != nil { log.Fatal().Err(err).Msg("auto-migrate") }
+
+    return crudobject.CrudRouterController{
+        Log: log,
+        Opts: opts,
+        GetAll: func(p crudobject.Pagination) interface{} {
+            var res []{{.Model}}
+            d := db.Model(&{{.Model}}{}).Offset(p.Page * p.PerPage).Limit(p.PerPage)
+            if p.Sort != nil { d = d.Order(fmt.Sprintf("%s %s", p.Sort.Field, strings.ToLower(string(p.Sort.Order)))) }
+            d.Find(&res)
+            return res
+        },
+        GetMany: func(ids []uint64, p crudobject.Pagination) interface{} {
+            var res []{{.Model}}
+            d := db.Model(&{{.Model}}{}).Offset(p.Page * p.PerPage).Limit(p.PerPage)
+            if p.Sort != nil {
+                d = d.Order(fmt.Sprintf("%s %s", p.Sort.Field, strings.ToLower(string(p.Sort.Order))))
+            }
+            d.Find(&res, ids)
+            return res
+        },
+        GetOne: func(id uint64) interface{} {
+            var res {{.Model}}
+            tx := db.Model(&{{.Model}}{}).Find(&res, "id", id)
+            if tx.RowsAffected == 0 { return nil }
+            return res
+        },
+        Size: func(p crudobject.Pagination) int64 {
+            var res int64
+            db.Model(&{{.Model}}{}).Count(&res)
+            return res
+        },
+        Create: func(r []byte) (interface{}, error) {
+            var obj {{.Model}}
+            if err := json.Unmarshal(r, &obj); err != nil {
+                log.Error().Err(err).Msg("decode json")
+                return nil, err
+            }
+            {{ range .Base64Fields }}
+            if obj.{{.Name}} != nil {
+                options := crudobject.Base64FileOpts{
+                    AddDate: {{$dp}},
+                    Prefix: "{{$mp}}",
+                    Thumbnails: []crudobject.ThumbnailBase64File{
+                        {{ range .Thumb -}}
+                            { {{.Width}}, {{.Height}} },
+                        {{- end }}
+                    },
+                }
+                if err := obj.{{.Name}}.Write(opts.MediaPath, opts.MediaUrl, options); err != nil {
+                    log.Error().Err(err).Msg("fail to save file {{.Name}}")
+                    return nil, err
+                }
+            }
+            {{- end }}
+
+            tx := db.Model(&{{.Model}}{}).Create(&obj)
+            if tx.Error != nil {
+                log.Error().Err(tx.Error).Msg("db error")
+                return nil, tx.Error
+            }
+            return obj, nil
+        },
+        Update: func(id uint64, r []byte) (interface{}, error) {
+            var obj {{.Model}}
+            if err := json.Unmarshal(r, &obj); err != nil {
+                log.Error().Err(err).Msg("decode json")
+                return nil, err
+            }
+
+            {{ range .Base64Fields }}
+            if obj.{{.Name}} != nil {
+                options := crudobject.Base64FileOpts{
+                    AddDate: {{$dp}},
+                    Prefix: "{{$mp}}",
+                    Thumbnails: []crudobject.ThumbnailBase64File{
+                    {{ range .Thumb -}}
+                        { {{.Width}}, {{.Height}} },
+                    {{- end }}
+                    },
+                }
+                if err := obj.{{.Name}}.Write(opts.MediaPath, opts.MediaUrl, options); err != nil {
+                    log.Error().Err(err).Msg("fail to save file {{.Name}}")
+                    return nil, err
+                }
+            }
+            {{- end }}
+
+            obj.ID = id
+            tx := db.Save(&obj)
+            if tx.Error != nil {
+                log.Error().Err(tx.Error).Msg("db error")
+                return nil, tx.Error
+            }
+            return obj, nil
+        },
+        Delete: func(id uint64) error {
+            tx := db.Delete(&{{.Model}}{}, id)
+            return tx.Error
+        },
+        DeleteMany: func(ids []uint64) error {
+            tx := db.Delete(&{{.Model}}{}, ids)
+            return tx.Error
+        },
+        DeleteAll: func() {
+            db.Where("1 = 1").Delete(&{{.Model}}{})
+        },
+    }
+}

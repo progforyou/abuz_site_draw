@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Рулетка АБУZZИЩЕ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+
+<div class="relative" id="game-modal" style="display: none; z-index: 1000;" aria-labelledby="modal-title" role="dialog">
+
+    <div class="background fixed inset-0 transition-opacity"></div>
+
+    <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0"
+             id="game-modal-inner">
+            <div class="modal-container relative overflow-hidden text-left flex sm:w-full">
+                <div class="modal-ticket" id="game-modal-ticket">
+                    подарок
+                </div>
+                <div class="modal-header flex">
+                    <svg id="modal-close" width="14" height="16" viewBox="0 0 14 16" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.615234 16H3.44238L7.11914 10.1992H7.17773L10.8252 16H13.6523L8.58398 8.28027L13.7256 0.765625H10.8838L7.26562 6.47852H7.20703L3.54492 0.765625H0.703125L5.80078 8.38281L0.615234 16Z"
+                              fill="#313131"/>
+                    </svg>
+                </div>
+                <div class="modal-body">
+                    <div class="game-modal-type mt-2" id="game-modal-type">
+                        Поздравляем!
+                    </div>
+                    <div class="game-modal-price flex">
+                        <div id="game-modal-body">
+                            20%
+                        </div>
+                        <svg class="modal-copy" style="display: none;" id="modal-copy" width="12" height="15"
+                             viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="7" height="9" stroke="#393939"/>
+                            <rect x="4.5" y="5.5" width="7" height="9" stroke="#393939"/>
+                        </svg>
+                    </div>
+                    <div class="game-modal-description" id="game-modal-description">
+                        Скидка на обучение
+                    </div>
+                </div>
+                <div class="w-full flex modal-footer mt-auto">
+                    <button type="button" class="mx-auto game-modal-button" id="take-price">
+                        Забрать
+                    </button>
+                </div>
+                <img src="../static/img/happy_hero.png" class="modal-toy" id="game-modal-toy">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="back-square">
+    <header>
+        <nav class="px-4 lg:px-6 py-6 relative">
+            <div class="flex flex-wrap justify-between items-center mx-auto my-container">
+                <a href="#" class="flex bg-white container-brand">
+                    <div class="self-center text-xl font-semibold whitespace-nowrap brand">АБУ<span>ZZ</span>ИЩЕ</div>
+                </a>
+                <div class="flex">
+                    <div class="hidden lg:flex justify-between items-center w-full flex lg:w-auto menu">
+                        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                            <li>
+                                <a href="#" class="block py-2 pr-4 pl-3 item transition-colors mr-4">Информация</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Ответы на вопросы</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button class="hidden lg:flex items-center border-2 buy transition-colors">
+                        <div class="m-auto flex">
+                            <svg class="mr-4" width="22" height="23" viewBox="0 0 22 23" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.4167 6.70842H14.6667V5.75008C14.6667 4.73342 14.2803 3.75839 13.5927 3.03951C12.9051 2.32062 11.9725 1.91675 11 1.91675C10.0275 1.91675 9.0949 2.32062 8.40726 3.03951C7.71963 3.75839 7.33332 4.73342 7.33332 5.75008V6.70842H4.58332C4.34021 6.70842 4.10705 6.80938 3.93514 6.9891C3.76323 7.16883 3.66666 7.41258 3.66666 7.66675V18.2084C3.66666 18.9709 3.95639 19.7022 4.47211 20.2413C4.98784 20.7805 5.68731 21.0834 6.41666 21.0834H15.5833C16.3127 21.0834 17.0121 20.7805 17.5279 20.2413C18.0436 19.7022 18.3333 18.9709 18.3333 18.2084V7.66675C18.3333 7.41258 18.2367 7.16883 18.0648 6.9891C17.8929 6.80938 17.6598 6.70842 17.4167 6.70842ZM9.16666 5.75008C9.16666 5.24175 9.35981 4.75424 9.70363 4.39479C10.0474 4.03535 10.5138 3.83341 11 3.83341C11.4862 3.83341 11.9525 4.03535 12.2964 4.39479C12.6402 4.75424 12.8333 5.24175 12.8333 5.75008V6.70842H9.16666V5.75008ZM16.5 18.2084C16.5 18.4626 16.4034 18.7063 16.2315 18.8861C16.0596 19.0658 15.8264 19.1667 15.5833 19.1667H6.41666C6.17354 19.1667 5.94038 19.0658 5.76848 18.8861C5.59657 18.7063 5.49999 18.4626 5.49999 18.2084V8.62508H7.33332V9.58342C7.33332 9.83758 7.4299 10.0813 7.60181 10.2611C7.77372 10.4408 8.00687 10.5417 8.24999 10.5417C8.4931 10.5417 8.72626 10.4408 8.89817 10.2611C9.07008 10.0813 9.16666 9.83758 9.16666 9.58342V8.62508H12.8333V9.58342C12.8333 9.83758 12.9299 10.0813 13.1018 10.2611C13.2737 10.4408 13.5069 10.5417 13.75 10.5417C13.9931 10.5417 14.2263 10.4408 14.3982 10.2611C14.5701 10.0813 14.6667 9.83758 14.6667 9.58342V8.62508H16.5V18.2084Z"
+                                      fill="white"/>
+                            </svg>
+                            Купить
+                        </div>
+                    </button>
+                </div>
+                <div class="block lg:hidden cursor-pointer" onclick="toggleMenu()" id="menu-toggler-div">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg"
+                         id="menu-toggler">
+                        <path d="M3 3H27M3 11H11M3 19H19" stroke="white" stroke-width="5" stroke-linecap="round" id="menu-toggler-path"
+                              stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="hidden menu absolute menu-mobile" id="menu">
+                <ul class="flex flex-col font-medium">
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors mr-4">Обучения 📕</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Новый год 🎄</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Наши проекты 🤝</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Отзывы 👩‍💻</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Пользовательское соглашение
+                            📑</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container-happy flex">
+            <div class="my-container mx-auto flex">
+                <div class="w-full">
+                    <div class="flex w-full happy-text">
+                        <div class="w-auto m-auto">
+                            меня посадили за абуз незамерзайки
+                        </div>
+                    </div>
+                    <div class="flex w-full happy-title">
+                        <div class="w-auto m-auto">
+                            С новым
+                        </div>
+                    </div>
+                    <div class="flex w-full happy-year mt-5">
+                        <div class="w-auto m-auto">
+                            <div>
+                                2023
+                            </div>
+                            <img src="../static/img/new-garland.png" alt="garland">
+                        </div>
+                    </div>
+                    <div class="flex w-full happy-title mt-5">
+                        <div class="w-auto m-auto">
+                            годом!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flicker item-1 flex items-center" id="flicker-item-1">
+                АБУЗ ПХ
+            </div>
+
+            <div class="flicker item-2 flex items-center" id="flicker-item-2">
+                АБУЗ ПП 2.0
+            </div>
+
+            <div class="flicker item-3 flex items-center" id="flicker-item-3">
+                АБУЗ БИРЖИ 2.0
+            </div>
+
+            <div class="flicker item-4 flex items-center" id="flicker-item-4">
+                АБУЗ ПП
+            </div>
+
+            <div class="flicker item-5 flex items-center" id="flicker-item-5">
+                ОБУЧЕНИЕ P2P
+            </div>
+
+            <div class="flicker item-6 flex items-center" id="flicker-item-6">
+                АБУЗ БУРЖ КАЗИНО
+            </div>
+        </section>
+
+        <marquee class="marquee" id="marquee">
+                <span class="mobile-flicker items-center">АБУЗ ПХ</span>
+                <span class="mobile-flicker items-center">АБУЗ ПП 2.0</span>
+                <span class="mobile-flicker items-center">АБУЗ БИРЖИ 2.0</span>
+                <span class="mobile-flicker items-center">АБУЗ ПП</span>
+                <span class="mobile-flicker items-center">ОБУЧЕНИЕ P2P</span>
+                <span class="mobile-flicker items-center">АБУЗ БУРЖ КАЗИНО</span>
+        </marquee>
+
+        <section class="container-game flex">
+            <div class="game-toy game-toy-ellipse-left"></div>
+            <div class="game-toy game-toy-ellipse-right"></div>
+            <img class="game-toy game-toy-left" src="../static/img/toy.png" alt="toy">
+            <img class="game-toy game-toy-right" src="../static/img/toy.png" alt="toy">
+
+            <div class="my-container mx-auto">
+                <div class="w-full game-top px-4">
+                    <div class="game-top-text">
+                        Для наших любимых подписчиков мы сделали рулетку.
+                    </div>
+                    <div class="game-top-link mt-3">
+                        Абуз рулетки абуззище
+                        <svg width="127" height="15" viewBox="0 0 127 15" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M124.462 5.80769C125.669 6.57835 122.689 7.10158 119.11 7.43487C119.747 7.30996 120.378 7.19047 121.001 7.07692C122.575 6.78986 121.613 5.16776 120.221 4.27575C118.722 3.92116 117.012 3.62143 115.236 3.36814C114.318 3.25998 113.401 3.13911 112.484 3.01519C104.536 2.09864 96.7665 2 101.634 2C105.311 2 108.899 2.53085 112.484 3.01519C113.405 3.12147 114.329 3.23875 115.236 3.36814C116.369 3.50161 117.505 3.61573 118.644 3.69231C119.16 3.72697 119.719 3.95381 120.221 4.27575C122.024 4.70218 123.522 5.20796 124.462 5.80769Z"
+                                  fill="#E6E6E6"/>
+                            <path d="M2 11.3077C7.85034 7.988 22.2991 11.5943 29.541 10.2735C36.197 9.05952 41.4657 7.92308 48.3926 7.92308C68.7928 7.92308 89.907 7.92308 110.028 7.92308C111.941 7.92308 126.926 7.38099 124.462 5.80769C118.9 2.25757 93.7688 2 101.634 2C107.412 2 112.971 3.31111 118.644 3.69231C120.589 3.82301 123.143 6.68626 121.001 7.07692C113.328 8.47632 104.395 10.7789 97.4362 13"
+                                  stroke="#19C903" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="game flex flex-wrap mx-auto">
+                    <div class="info-block">
+                        Акция продлится <br> до <br> 31.12.2022 18:00
+                    </div>
+                    <div class="game-item mr-50px" id="game-slot-1">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+                    <div class="game-item mr-50px" id="game-slot-2">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+                    <div class="game-item mb-50px" id="game-slot-3">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+                    <div class="game-item mr-50px" id="game-slot-4">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+                    <div class="game-item-center flex mr-50px">
+                        <div class="flex flex-col m-auto">
+                            <div class="time mx-auto" id="game-time-mobile">
+                                00:00:00
+                            </div>
+                            <div class="info mt-2 mx-auto">
+                                Осталось до следующей попытки
+                            </div>
+                            <div class="start-container mx-auto">
+                                <button class="start mt-2 mx-auto" id="start-mobile">
+                                    Начать
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-item mb-50px" id="game-slot-5">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+
+                    <div class="game-item mr-50px" id="game-slot-6">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+
+                    <div class="game-item mr-50px" id="game-slot-7">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+
+                    <div class="game-item" id="game-slot-8">
+                        <img src="../static/img/happy_hero.png">
+                    </div>
+                    <div class="hidden game-item-center game-item-center-mobile flex mx-auto">
+                        <div class="flex flex-col m-auto">
+                            <div class="time mx-auto" id="game-time">
+                                00:00:00
+                            </div>
+                            <div class="info mt-2 mx-auto">
+                                Осталось до следующей попытки
+                            </div>
+                            <div class="start-container mx-auto">
+                                <button class="start mt-2 mx-auto" id="start">
+                                    Начать
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex mt-12 terms-section">
+                    <img src="../static/img/cat.png"><span>Условия акции*</span>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="back-space flex">
+    <section class="wish-section my-container mx-auto">
+        <div class="wish-title">
+            Пожелания от команды
+        </div>
+        <div class="mt-12 pb-16">
+            <div class="wish-scroll pb-8" id="horizontal-scroller">
+                <div class="flex test">
+                    <div class="col">
+
+                        <div class="item flex align-center">
+                            <img src="../static/img/avatars/mouse.jpeg" alt="mouse" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #B55762;">Мышь 🐁</span>
+                                    <span class="role">админ</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    В новом году давайте заниматься только тем, что нравится
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">12:05</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/sempai.png" alt="sempai" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #9A251C;">sempai 🃏️️🌹</span>
+                                    <span class="role">главный модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Стабильного ворка и карьерного роста, не проебывайте новый год ❄️
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">05:08</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/saint_zaiden.jpeg" alt="saint_zaiden" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #619EFF;">saint zaiden 🙏</span>
+                                    <span class="role">дизайнер</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Побольше отдыхайте и наслаждайтесь жизнью 🕉️
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">00:00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/Yuri.png" alt="Yuri" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #D6C0A8;">Юрий</span>
+                                    <span class="role">куратор по биржам</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Желаю всем только pump! No dump! Разум когда-нибудь победит!
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">11:06</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+
+                        <div class="item flex align-center">
+                            <img src="../static/img/avatars/babki.png" alt="babki" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #13E3BB;">Бабки в лапки</span>
+                                    <span class="role">админ</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Чтоб хуй стоял и бабки были
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">12:00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/saint_crunk.jpeg" alt="saint_crunk" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #F1B85B;">saint crunk</span>
+                                    <span class="role">админ</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Метального здоровья приближения и к мечте, не теряя улыбки. 😸
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">09:54</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/japanese_demon.jpeg" alt="japanese_demon" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #C35153;">japanese demon</span>
+                                    <span class="role">куратор по казино</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Не забывать про gym,не тратить много bucks, не говорить paSSword
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">17:40</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/He_bought%3F.png" alt="He_bought?" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #F1B85B;">He b0ught?</span>
+                                    <span class="role">куратор по пп</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Всем материальных благ и душевного развития 🙏
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">06:02</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col">
+
+                        <div class="item flex align-center">
+                            <img src="../static/img/avatars/ᴀɢᴏɴʏ.png" alt="ᴀɢᴏɴʏ" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #98B6F5;">†ᴀɢᴏɴʏ†</span>
+                                    <span class="role">контент мейкер</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Никогда не опускать руки, даже у самой крупной реки есть исток 🌊
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">17:30</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/Andrew.png" alt="Andrew" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #E0B92D;">Andrew</span>
+                                    <span class="role">программист</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    В новом 2023 году желаю смело идти вперёд, не смотря ни на что😎
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">05:29</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/Andrew_SH.jpeg" alt="Andrew_SH" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #B89875;">Андрей Ш</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Желаю всем добра, тепла, успеха в новом наступающем 2023 году!
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">13:45</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/dyrov.png" alt="Павел Дуров" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #704814;">Павел Дуров</span>
+                                    <span class="role">трейдер</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Лишь утратив всё до конца, мы обретаем свободу
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">06:02</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col">
+
+                        <div class="item flex align-center">
+                            <img src="../static/img/avatars/kaylo.png" alt="Кайло" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #98B6F5;">Кайло</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Счастья, здоровья, здоровья, счастья, счастья, здоровья
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">10:11</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/dapp.png" alt="Dapp 2.0" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #E0522D;">Dapp 2.0🪬</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Побольше лидов вам и поменьше долбаебов в жизни.
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">21:41</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/knyaz.png" alt="knyaz" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #651EFC;">Князь</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Желаю всем уйти с работы на дядю 🎁
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">23:15</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/nikita.jpeg" alt="Никита" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #8A4928;">Никита</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    0
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">18:17</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+
+                        <div class="item flex align-center">
+                            <img src="../static/img/avatars/jack.jpeg" alt="Jack Pivovarov" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #941030;">Jack Pivovarov</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Желаю всем найти ту самую кнопку бабло
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">17:30</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/hemix.png" alt="Hemix" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #E0522D;">Hemix</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    У вас будет все: деньги, телки, тачки, админки, хуинки
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">05:13</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/bebrik.png" alt="bebrik" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #802B93;">bebrik</span>
+                                    <span class="role">модератор</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Дорогой абузер, в 2024 достигай своих целей, несмотря на трудности
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">22:41</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item flex align-center mt-14">
+                            <img src="../static/img/avatars/raft.png" alt="Raft" class="mr-8">
+                            <div class="text">
+                                <div class="top-text flex">
+                                    <span class="name" style="color: #8A4928;">Raft</span>
+                                    <span class="role">куратор по ПП</span>
+                                </div>
+                                <div class="body-text mt-2">
+                                    Каждый день - возможность, каждая возможность - будущее
+                                </div>
+                                <div class="footer-text flex w-full">
+                                    <span class="time">07:59</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex lg:hidden w-full justify-center">
+                <span id="scroll-ellips-1" class="scroll-ellips active">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="4.5" cy="4.5" r="4.5" fill="#585858"/>
+                    </svg>
+                </span>
+                <span id="scroll-ellips-2" class="scroll-ellips">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="4.5" cy="4.5" r="4.5" fill="#585858"/>
+                    </svg>
+                </span>
+                <span id="scroll-ellips-3" class="scroll-ellips">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="4.5" cy="4.5" r="4.5" fill="#585858"/>
+                    </svg>
+                </span>
+                <span id="scroll-ellips-4" class="scroll-ellips">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="4.5" cy="4.5" r="4.5" fill="#585858"/>
+                    </svg>
+                </span>
+                <span id="scroll-ellips-5" class="scroll-ellips">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="4.5" cy="4.5" r="4.5" fill="#585858"/>
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<img src="../static/img/left-garland.png" alt="garland" class="left-garland body-garland">
+<img src="../static/img/right-garland.png" alt="garland" class="right-garland body-garland">
+<script>
+    let menu = document.getElementById('menu');
+    let toggler = document.getElementById('menu-toggler');
+    let togglerI = document.getElementById('menu-toggler-div');
+    let togglerP = document.getElementById('menu-toggler-path');
+
+    function toggleMenu() {
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('w-auto');
+        menu.style.top = "19px"
+        menu.style.right = "19px"
+        menu.style.marginRight = "0"
+    }
+</script>
+<script>
+    let endTime,
+        can
+    can = {{.Data.Can}}
+    if (can) {
+        endTime = new Date("{{.Data.Timer}}")
+    }
+</script>
+<script src="../static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+
+/*MEDIAAAA*/
+@media (max-width: 1450px) {
+    .container-game .game-toy.game-toy-right {
+        width: 251px;
+        height: 332px;
+    }
+
+    .container-game .game-toy.game-toy-ellipse-right {
+        width: 179px;
+        height: 325px;
+    }
+
+    .container-game .game-toy.game-toy-left {
+        width: 207px;
+        height: 278px;
+    }
+
+    .container-game .game-toy.game-toy-ellipse-left {
+        width: 155px;
+        height: 325px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container-game .game-toy.game-toy-right {
+        width: 201px;
+        height: 282px;
+    }
+
+    .container-game .game-toy.game-toy-ellipse-right {
+        width: 129px;
+        height: 275px;
+    }
+
+    .container-game .game-toy.game-toy-left {
+        width: 157px;
+        height: 228px;
+    }
+
+    .container-game .game-toy.game-toy-ellipse-left {
+        width: 105px;
+        height: 275px;
+    }
+
+    .wish-section .wish-scroll .item img {
+        width: 88px;
+        height: 88px;
+    }
+
+    .wish-section .wish-scroll .item .text{
+        height: 110px;
+    }
+
+    .col {
+        padding-left: 1.5rem;
+    }
+
+    .my-container {
+        max-width: 960px;
+    }
+}
+
+
+@media (max-width: 1120px) {
+
+    main .flicker.item-1 {
+        top: 11%;
+        left: 3%;
+    }
+
+    main .flicker.item-2 {
+        top: 52%;
+        left: 10%;
+    }
+
+    main .flicker.item-3 {
+        top: 97%;
+        left: 4%;
+    }
+
+    main .flicker.item-4 {
+        top: 21%;
+        right: 5.4%;
+    }
+
+    main .flicker.item-5 {
+        top: 64%;
+        right: 8.4%;
+    }
+
+    main .flicker.item-6 {
+        top: 107%;
+        right: 2.9%;
+    }
+}
+
+@media (max-width: 1020px) {
+    .wish-section .wish-scroll .item .text {
+        width: 300px;
+        height: 100px;
+    }
+
+    .wish-section .wish-scroll .item .text .top-text .name {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 13px;
+    }
+
+    .wish-section .wish-scroll .item .text .top-text .role {
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 13px;
+    }
+
+    .wish-section .wish-scroll .item .text .body-text {
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 19px;
+    }
+}
+
+@media (max-width: 992px) {
+    .my-container {
+        max-width: 720px;
+    }
+    .container-game .game .game-item,
+    .container-game .game .game-item-center {
+        width: 170px;
+        height: 140px;
+        text-align: center;
+    }
+
+    .container-game .game .game-item img {
+        width: 70px;
+        height: 90px;
+    }
+
+    .container-game .game {
+        justify-content: center;
+    }
+    .wish-section .wish-scroll .item .text {
+        height: 110px;
+    }
+
+    .col {
+        padding-left: 4%;
+    }
+
+    .test {
+        width: calc(100% * 5);
+    }
+
+    main .flicker {
+        display: none !important;
+    }
+
+    .marquee {
+        display: block;
+        padding: .2rem .5rem;
+        margin-top: 2rem;
+    }
+
+    .marquee .mobile-flicker {
+        margin-right: .5rem;
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+    }
+
+    .container-game {
+        margin-top: 4rem;
+    }
+
+    main .container-happy {
+        margin-top: 3rem;
+    }
+
+    .container-game .game .game-item,
+    .container-game .game .game-item-center{
+        width: 155px;
+        height: 118px;
+    }
+
+    .container-game .game .game-item-center .start{
+
+    }
+
+    .container-game .game .game-item-center .time{
+        font-size: 25px;
+    }
+    .container-game .game .game-item-center .info{
+        line-height: initial;
+    }
+}
+
+@media (max-width: 768px) {
+    .col {
+        padding-left: 2%;
+    }
+
+    .my-container {
+        max-width: 540px;
+    }
+    .container-game .game .game-item {
+        width: 123px;
+        height: 95px;
+        margin-right: 2rem;
+    }
+
+    .container-game .game-toy.game-toy-left {
+        width: 78px;
+        height: 96px;
+        left: -7%;
+        top: 67%;
+    }
+
+    .container-game .game-toy.game-toy-right{
+        width: 117px;
+        height: 144px;
+        top: 67%;
+        right: -6%;
+    }
+
+    .container-game .game-toy.game-toy-ellipse-left{
+        left: -32%;
+        top: 54%;
+    }
+
+    .container-game .game-toy.game-toy-ellipse-right{
+        top: 60%;
+        right: -28%;
+    }
+
+    .wish-section .wish-title{
+        line-height: 70px;
+    }
+
+    .container-game .game .game-item img {
+        width: 68px;
+        height: 95px;
+    }
+
+    .container-game .game .game-item-center{
+        display: none;
+    }
+
+    .container-game .game .game-item-center-mobile{
+        display: block;
+        width: 100%;
+    }
+
+    .container-game .game .game-item-center .time{
+        font-size: 30px;
+    }
+
+    .container-game .game .game-item{
+        margin-bottom: 25px;
+    }
+
+    .container-game .game{
+        justify-content: space-between;
+    }
+
+    #game-slot-2,
+    #game-slot-4,
+    #game-slot-6,
+    #game-slot-8{
+        margin-right: 0;
+    }
+
+    .container-game .game-top{
+        max-width: 315px;
+        min-height: 105px;
+    }
+
+    .container-game .game-top .game-top-text{
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 23px;
+    }
+
+    .container-game .game-top .game-top-link{
+        margin-top: .2rem;
+        margin-left: 0;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 33px;
+    }
+
+    .container-game .game-top .game-top-link svg{
+        width: 84px;
+        height: 11px;
+        right: 6%;
+    }
+
+    .container-game .game{
+        margin-top: -.5rem;
+    }
+
+    .container-game .game .info-block{
+        display: none;
+    }
+
+    .terms-section{
+        margin-top: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .wish-section .wish-title{
+        font-size: 30px;
+        line-height: 145px;
+    }
+}
+
+@media (max-width: 576px) {
+    nav{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .my-container {
+        max-width: 100%;
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+
+    #game-modal .modal-container .modal-body .game-modal-description{
+        line-height: initial;
+    }
+
+    .container-game .game .game-item{
+        margin-right: 2rem;
+    }
+
+    .col {
+        padding-left: 0;
+    }
+
+    .container-game .game{
+        padding: 2rem 3rem 3rem 3rem;
+    }
+
+    #game-modal .modal-container{
+        width: 100%;
+        min-height: 286px;
+    }
+
+    main .container-happy .happy-year{
+        font-size: 150px;
+        line-height: 145px;
+    }
+
+
+    .wish-section .wish-scroll .item .text{
+        padding: .4rem .7rem .2rem 1rem;
+    }
+
+    .wish-section .wish-scroll .item .text:before{
+        z-index: 1;
+    }
+
+    .wish-section .wish-scroll .item .text .body-text{
+        z-index: 2;
+    }
+
+    .col{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wish-section .wish-scroll .item {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .wish-section .wish-scroll .item img{
+        width: 72px;
+        height: 72px;
+        margin-right: 20px;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .wish-section .wish-scroll .item .text {
+        width: 240px;
+        min-width: 240px;
+        max-width: 240px;
+    }
+}
+
+
+
+@media (max-width: 440px) {
+    .container-game .game .game-item{
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 425px) {
+    .container-game .game {
+        padding: 1rem 2rem 3rem 2rem;
+    }
+}

@@ -1,0 +1,749 @@
+.body-garland {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.body-garland.left-garland {
+    left: 0;
+    width: 44%;
+}
+
+.body-garland.right-garland {
+    right: 0;
+    width: 62%;
+}
+
+header .container-brand,
+aside .container-brand{
+    width: 125px;
+    height: 34px;
+}
+
+header .brand,
+aside .brand{
+    font-family: var(--brand-font);
+    margin: auto;
+    color: var(--color-black);
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+}
+
+header .brand span,
+aside .brand span{
+    color: var(--color-red);
+}
+
+header .menu {
+    margin-right: 5.4rem;
+}
+
+header .menu-mobile{
+    background: #1B1B1F;
+    padding: 1.2rem 1.3rem 1.3rem 1rem;
+    z-index: 1000;
+    max-width: 230px;
+}
+
+header .menu-mobile ul li a{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+header ul li .item:hover {
+    color: var(--color-white-dark);
+}
+
+header button.buy {
+    width: 140px;
+    height: 46px;
+    border-radius: 300px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+header button.buy:hover {
+    color: #CF3535;
+   border-color: #CF3535;
+}
+
+header button.buy:focus{
+    color: #FF0000;
+   border-color: #FF0000;
+}
+
+header button.buy:focus svg path {
+    fill: #FF0000;
+}
+
+header button.buy:hover svg path {
+    fill: #CF3535;
+}
+
+
+/*happy section*/
+
+main .container-happy {
+    position: relative;
+    margin-top: 5.7rem;
+    width: 100%;
+}
+
+main .container-happy .happy-text {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+main .container-happy .happy-text div {
+    position: relative;
+}
+
+main .container-happy .happy-text div:after {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    content: "";
+    width: 100%;
+    height: 1px;
+    z-index: 99;
+    transform: rotate(0.25deg);
+    background-color: var(--color-white);
+}
+
+main .container-happy .happy-title {
+    font-weight: 700;
+    font-size: 50px;
+}
+
+main .container-happy .happy-year {
+    font-weight: 700;
+    font-size: 194px;
+    text-shadow: 0 0 11px rgba(25, 201, 3, 0.9);
+    color: var(--color-black);
+    line-height: 145px;
+    letter-spacing: -0.025em;
+}
+
+main .container-happy .happy-year div {
+    position: relative;
+}
+
+main .container-happy .happy-year img {
+    position: absolute;
+    top: -6.2%;
+    left: 0.6%;
+    right: 0;
+    bottom: 0;
+}
+
+
+main .flicker {
+    display: none;
+    position: absolute;
+    background: var(--bg-red);
+    border-radius: 21px;
+    height: 35px;
+    padding: 0 22px 0 27px;
+    line-height: 33px;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--color-smoke);
+    text-transform: uppercase;
+}
+
+main .flicker.animate {
+    display: block;
+    animation: shadow 5s infinite;
+}
+
+@keyframes shadow {
+    0% {
+        background: #A40000;
+    }
+    15% {
+        background: rgba(164, 0, 0, 0.7);
+    }
+    30% {
+        background: rgba(164, 0, 0, 0.5);
+    }
+    45% {
+        background: rgba(164, 0, 0, 0.2);
+    }
+    60% {
+        background: rgba(164, 0, 0, 0);
+    }
+    75% {
+        background: rgba(164, 0, 0, 0.5);
+    }
+    100% {
+        background: rgba(164, 0, 0, 0.7);
+    }
+}
+
+main .flicker.item-1 {
+    top: 13%;
+    left: 6%;
+}
+
+main .flicker.item-2 {
+    top: 53%;
+    left: 17%;
+    padding: 0 16px;
+}
+
+main .flicker.item-3 {
+    top: 97%;
+    left: 10%;
+    padding: 0 9px 0 10px;
+}
+
+main .flicker.item-4 {
+    top: 24%;
+    right: 7.4%;
+    padding: 0 21px 0 26px;
+}
+
+main .flicker.item-5 {
+    top: 65%;
+    right: 13.4%;
+    padding: 0 13px 0 18px;
+}
+
+main .flicker.item-6 {
+    top: 109%;
+    right: 7.9%;
+    padding: 0 10px;
+}
+
+
+/*game section*/
+.container-game {
+    position: relative;
+    margin-top: 10rem;
+}
+
+.container-game .game-toy {
+    position: absolute;
+    z-index: 99;
+}
+
+.container-game .game-toy.game-toy-left {
+    width: 307px;
+    height: 378px;
+    left: -10%;
+    top: 22%;
+    transform: matrix(-0.74, -0.67, -0.67, 0.74, 0, 0);
+}
+
+.container-game .game-toy.game-toy-right {
+    top: 42%;
+    right: -11%;
+    transform: rotate(-45deg);
+    width: 351px;
+    height: 432px;
+}
+
+.container-game .game-toy.game-toy-ellipse-left {
+    width: 255px;
+    height: 425px;
+    background: #060F6F;
+    filter: blur(61px);
+    transform: rotate(-60deg);
+    z-index: 98;
+    left: -16%;
+    top: 13%;
+}
+
+.container-game .game-toy.game-toy-ellipse-right {
+    width: 279px;
+    height: 425px;
+    background: #060F6F;
+    filter: blur(61px);
+    transform: rotate(-60deg);
+    z-index: 98;
+    top: 42%;
+    right: -11%;
+}
+
+.container-game .game-top {
+    padding-top: 1rem;
+    background: #131415;
+    border-radius: 37px;
+    max-width: 507px;
+    min-height: 170px;
+    text-align: center;
+    margin: auto;
+}
+
+.container-game .game-top .game-top-text {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 33px;
+}
+
+.container-game .game-top .game-top-link {
+    position: relative;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 33px;
+    color: var(--color-green);
+    text-align: left;
+    margin-left: 3.9rem;
+}
+
+.container-game .game-top .game-top-link svg {
+    position: absolute;
+    top: 49%;
+    transform: translate(0, -50%);
+    right: 14%;
+}
+
+.container-game .game {
+    position: relative;
+    margin-top: -2rem;
+    padding: 2.8rem 3.8rem 3.8rem 3.9rem;
+    background: #131415;
+    border-radius: 49px;
+    width: 100%;
+    max-width: 935px;
+}
+
+.container-game .game .info-block {
+    position: absolute;
+    padding: .5rem;
+    top: -3px;
+    left: 2.2rem;
+    z-index: 100;
+    font-weight: 200;
+    font-size: 11px;
+    line-height: 13px;
+    width: 70px;
+    height: 94px;
+    text-align: center;
+    background-image: url("data:image/svg+xml,%3Csvg width='70' height='94' viewBox='0 0 70 94' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H70V66.5L0 94V0Z' fill='%2303570C'/%3E%3C/svg%3E%0A");
+}
+
+.container-game .game .game-item {
+    position: relative;
+    display: flex;
+    width: 234px;
+    height: 180px;
+    border-radius: 31px;
+    background: linear-gradient(0deg, #181626, #181626), #191626;
+    box-shadow: 0 0 22px rgba(255, 255, 255, 0.5), inset -1px 0 10px rgba(0, 0, 0, 0.69);
+}
+
+.container-game .game .game-item.active:before {
+    display: none !important;
+}
+
+
+.container-game .game .game-item img {
+    width: 130px;
+    height: 180px;
+    margin: auto;
+}
+
+.container-game .game .game-item:before {
+    position: absolute;
+    content: "";
+    border-radius: 31px;
+    background: rgba(0, 0, 0, 0.78);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 80;
+}
+
+.container-game .game .game-item-center {
+    position: relative;
+    width: 234px;
+    height: 180px;
+}
+
+.container-game .game .game-item-center .time {
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 33px;
+}
+
+.container-game .game .game-item-center .info {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 33px;
+}
+
+.container-game .game .game-item-center .start {
+    width: 172px;
+    height: 54px;
+    border-radius: 21px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 33px;
+    background-color: var(--bg-red);
+    text-transform: uppercase;
+    transition: background-color .2s linear;
+    animation: pulse 2s infinite;
+}
+
+.container-game .game .game-item-center .start.disable {
+    background-color: #595959;
+    animation: none;
+    pointer-events: none;
+}
+
+.container-game .game .game-item-center .start:hover.disable {
+    background-color: #595959;
+    pointer-events: none;
+}
+
+.container-game .game .game-item-center .start-container {
+    width: 183px;
+    height: 64px;
+    justify-content: center;
+}
+
+@keyframes scale {
+    0% {
+        /*width: 172px;
+      height: 54px;*/
+        transform: scale(1.05);
+        filter: drop-shadow(0px 0px 13px #A40000);
+    }
+    50% {
+        /*width: 183px;
+    height: 64px;*/
+        transform: scale(1.1);
+        filter: drop-shadow(0px 0px 13px #A40000);
+    }
+    100% {
+        /*width: 178px;
+    height: 59px;*/
+
+        transform: scale(1.05);
+        filter: none;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        /*width: 172px;
+      height: 54px;*/
+        transform: scale(1.05);
+        filter: drop-shadow(0px 0px 13px #A40000);
+    }
+    25% {
+        /*width: 178px;
+      height: 59px;*/
+        transform: scale(1.07);
+        filter: none;
+    }
+    50% {
+        /*width: 183px;
+    height: 64px;*/
+        transform: scale(1.1);
+        filter: drop-shadow(0px 0px 13px #A40000);
+    }
+    75% {
+        /*width: 178px;
+    height: 59px;*/
+
+        transform: scale(1.07);
+        filter: none;
+    }
+    100% {
+        /*width: 178px;
+    height: 59px;*/
+
+        transform: scale(1.05);
+        filter: drop-shadow(0px 0px 13px #A40000);
+    }
+}
+
+.container-game .game .game-item-center .start:hover {
+    background-color: #840505;
+}
+
+.terms-section {
+    justify-content: center;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 33px;
+    color: var(--color-gray);
+    margin-bottom: 8.5rem;
+}
+
+.terms-section img {
+    height: 34px;
+    margin-right: -2px;
+    object-fit: cover;
+}
+
+.wish-section .wish-title {
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 145px;
+
+    text-align: center;
+    letter-spacing: -0.025em;
+}
+
+.col {
+    width: 25%;
+}
+
+.wish-section .wish-scroll {
+    overflow-x: scroll;
+    overflow-y: auto;
+}
+
+.wish-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.wish-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.test {
+    width: calc(100% * 2.5);
+}
+
+.wish-section .wish-scroll .item img {
+    width: 108px;
+    height: 108px;
+    border-radius: 500px;
+    background: linear-gradient(0deg, #FF0000, #FF0000);
+}
+
+.wish-section .wish-scroll .item .text {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #262425;
+    border-radius: 18px;
+    width: 358px;
+    height: 94px;
+    padding: .5rem .8rem .5rem 1.7rem;
+}
+
+.wish-section .wish-scroll .item .text:before {
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='31' viewBox='0 0 20 31' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 1.62607L20 0L18.4 26.0171C11.9777 30.6839 7.82591 31.3037 0 30.8953C2.58561 28.3647 3.49212 26.9352 4 24.391V1.62607Z' fill='%23262425'/%3E%3C/svg%3E%0A");
+    position: absolute;
+    width: 20px;
+    height: 31px;
+    bottom: 1px;
+    left: 0;
+}
+
+.wish-section .wish-scroll .item .text .top-text {
+    justify-content: space-between;
+}
+
+.wish-section .wish-scroll .item .text .top-text .name {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 13px;
+}
+
+.wish-section .wish-scroll .item .text .top-text .role {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 13px;
+    color: var(--color-gray-black);
+}
+
+.wish-section .wish-scroll .item .text .body-text {
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 19px;
+    color: #D2D2D2;
+}
+
+.wish-section .wish-scroll .item .text .footer-text {
+    margin-top: auto;
+    font-weight: 300;
+    font-size: 11px;
+    line-height: 19px;
+    color: #808080;
+    justify-content: end;
+}
+
+#game-modal {
+    position: relative;
+}
+
+#game-modal .background {
+    background: rgba(0, 0, 0, 0.62);
+}
+
+#game-modal .modal-container {
+    position: relative;
+    flex-direction: column;
+    background: var(--color-black);
+    border: 1px solid rgba(256, 256, 256, 0.2);
+    border-radius: 40px;
+    width: 464px;
+    height: 286px;
+    padding: 2.8rem 5.7rem 3.5rem 5.8rem;
+}
+
+#game-modal .modal-container .modal-header {
+    justify-content: end;
+}
+
+#game-modal .modal-container .modal-header svg {
+    cursor: pointer;
+}
+
+#game-modal .modal-container .modal-header svg path {
+    transition: all .2s linear;
+}
+
+#game-modal .modal-container .modal-header svg:hover path {
+    fill: #4d4d4d;
+}
+
+#game-modal .modal-container .modal-body {
+
+}
+
+#game-modal .modal-container .modal-body .game-modal-type {
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 33px;
+}
+
+#game-modal .modal-container .modal-body .game-modal-price {
+    font-weight: 700;
+    font-size: 100px;
+    line-height: 33px;
+    color: var(--color-black);
+    text-shadow: 0 0 6px #2400FF;
+    margin-top: 2.7rem;
+}
+
+#game-modal .modal-container .modal-body .game-modal-price .modal-copy {
+    cursor: pointer;
+    margin-top: 10%;
+    margin-left: 1rem;
+}
+
+#game-modal .modal-container .modal-body #game-modal-body.price {
+    text-shadow: 0 0 6px #2400FF;
+}
+
+#game-modal .modal-container .modal-body #game-modal-body.promo {
+    text-shadow: 0 0 6px #19B301;
+}
+
+#game-modal .modal-container .modal-body #game-modal-body.none {
+    font-size: 40px;
+    text-shadow: 0 0 6px #FF0000;
+}
+
+#game-modal .modal-container .modal-body .game-modal-description {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 33px;
+    margin-top: 2rem;
+}
+
+#game-modal .modal-container .modal-footer .game-modal-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 108px;
+    height: 30px;
+    background: #D9D9D9;
+    border-radius: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 33px;
+    /* identical to box height, or 254% */
+
+    text-align: center;
+
+    color: #000000;
+    transition: all .2s linear;
+}
+
+#game-modal .modal-container .modal-footer .game-modal-button:hover {
+    background: #eeeded;
+}
+
+#game-modal .modal-toy {
+    position: absolute;
+    bottom: -2rem;
+    right: 1rem;
+    width: 130px;
+}
+
+#game-modal .modal-toy.none {
+    bottom: -6rem;
+}
+
+#game-modal .modal-toy.promo {
+    bottom: 2rem;
+    right: -3.2rem;
+    transform: rotate(-34.92deg);
+}
+
+#game-modal .modal-ticket {
+    position: absolute;
+    top: 1rem;
+    left: -2rem;
+    z-index: 99;
+    background: #0E5004;
+    transform: rotate(-45.94deg);
+    padding: 0 2rem;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+#game-modal .modal-ticket.green {
+    background: #0E5004;
+}
+
+#game-modal .modal-ticket.red {
+    background: #BC011D;
+}
+
+/*MOBILE MARQUEE*/
+.mobile-flicker {
+    background: var(--bg-red);
+    border-radius: 21px;
+    height: 35px;
+    padding: 0 22px 0 27px;
+    line-height: 33px;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--color-smoke);
+    text-transform: uppercase;
+}
+
+.marquee {
+    display: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.scroll-ellips{
+    margin-right: 5px;
+}
+
+.scroll-ellips:last-child{
+    margin-right: 0;
+}
+
+.scroll-ellips.active svg circle{
+    fill: #B9B9B9;
+}
