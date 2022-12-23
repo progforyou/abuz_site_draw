@@ -7,7 +7,8 @@ aside{
     border-right: 1px solid #212121;;
 }
 
-header button.buy{
+header button.buy,
+header a.buy{
     width: 153px;
 }
 
@@ -30,15 +31,18 @@ aside .nav-list .nav-item{
     transition: all .2s linear;
 }
 
-aside .nav-list .nav-item svg path{
+aside .nav-list .nav-item svg path,
+aside .go-back svg path{
     transition: all .2s linear;
 }
 
-aside .nav-list .nav-item:hover{
+aside .nav-list .nav-item:hover,
+aside .go-back:hover{
     color: #FFFFFF;
 }
 
-aside .nav-list .nav-item:hover svg path{
+aside .nav-list .nav-item:hover svg path,
+aside .go-back:hover svg path{
     fill: #FFFFFF;
 }
 
@@ -77,6 +81,7 @@ aside .go-back{
     color: #8D8D8D;
     margin-top: 1.1rem;
     padding-left: 26px;
+    transition: all .2s linear;
 }
 
 /*Wrapper*/

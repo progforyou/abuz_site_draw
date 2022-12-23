@@ -57,7 +57,8 @@ header ul li .item:hover {
     color: var(--color-white-dark);
 }
 
-header button.buy {
+header button.buy,
+header a.buy{
     width: 140px;
     height: 46px;
     border-radius: 300px;
@@ -65,21 +66,25 @@ header button.buy {
     font-size: 16px;
 }
 
-header button.buy:hover {
+header button.buy:hover,
+header a.buy:hover {
     color: #CF3535;
    border-color: #CF3535;
 }
 
-header button.buy:focus{
+header button.buy:focus,
+header a.buy:focus{
     color: #FF0000;
    border-color: #FF0000;
 }
 
-header button.buy:focus svg path {
+header button.buy:focus svg path,
+header a.buy:focus svg path {
     fill: #FF0000;
 }
 
-header button.buy:hover svg path {
+header button.buy:hover svg path,
+header a.buy:hover svg path {
     fill: #CF3535;
 }
 

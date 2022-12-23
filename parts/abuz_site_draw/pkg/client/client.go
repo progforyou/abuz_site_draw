@@ -20,6 +20,12 @@ var (
 
 	//go:embed "template/index.html"
 	indexTemplate []byte
+
+	//go:embed "template/lk.html"
+	lkTemplate []byte
+
+	//go:embed "template/winning.html"
+	winningTemplate []byte
 )
 
 var xAuthSessionName = "x-auth-session"
@@ -79,6 +85,8 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 		w.WriteHeader(200)
 		w.Write(jsonBytes)
 	})
+	r.Get("/lk", wrap(lk))
+	r.Get("/reward", wrap(reward))
 	r.Handle("/static/*", http.FileServer(http.FS(htmlStatic)))
 	return nil
 }
@@ -117,6 +125,96 @@ func index(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controll
 	dataIndex := DataIndexPage{Data: dataR}
 	// Generate template
 	result, err := Render(indexTemplate, dataIndex)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to render")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	w.Write(result)
+}
+
+func lk(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
+	cookie, err := r.Cookie(xAuthSessionName)
+	/*ip := r.Header.Get("X-Real-IP")
+	ip = IP*/
+	var session string
+	if err != nil {
+		if err != http.ErrNoCookie {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+	} else {
+		session = cookie.Value
+	}
+	if session == "" {
+		sessionUuid, err := uuid.NewUUID()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		session = sessionUuid.String()
+		sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+		http.SetCookie(w, &sessionCookie)
+	}
+	/*dataR, err := c.Reward.Get(ip, session)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to get from db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	dataLk := DataLkPage{Data: dataR}*/
+	var dataLk interface{}
+	// Generate template
+	result, err := Render(lkTemplate, dataLk)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to render")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	w.Write(result)
+}
+
+func reward(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
+	cookie, err := r.Cookie(xAuthSessionName)
+	/*ip := r.Header.Get("X-Real-IP")
+	ip = IP*/
+	var session string
+	if err != nil {
+		if err != http.ErrNoCookie {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+	} else {
+		session = cookie.Value
+	}
+	if session == "" {
+		sessionUuid, err := uuid.NewUUID()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		session = sessionUuid.String()
+		sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+		http.SetCookie(w, &sessionCookie)
+	}
+	/*dataR, err := c.Reward.Get(ip, session)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to get from db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	dataLk := DataLkPage{Data: dataR}*/
+	var dataLk interface{}
+	// Generate template
+	result, err := Render(winningTemplate, dataLk)
 
 	if err != nil {
 		w.WriteHeader(500)
