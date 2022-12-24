@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bot_tasker/parts/abuz_site_draw/pkg/bot"
 	"bot_tasker/parts/abuz_site_draw/pkg/client"
 	"bot_tasker/parts/abuz_site_draw/pkg/data"
 	"flag"
@@ -19,11 +20,13 @@ import (
 // -build-me-for: linux
 
 var (
-	port int
+	port          int
+	telegramToken string
 )
 
 func init() {
 	flag.IntVar(&port, "port", 8000, "set port")
+	flag.StringVar(&telegramToken, "token", "5922829007:AAHFF6qFi0t4eVQvPuGp_F6p6g18lvrsAcw", "set telegram token")
 	flag.Parse()
 }
 
@@ -42,6 +45,8 @@ func main() {
 	httpLogger := log.With().Str("service", "http").Logger().Level(zerolog.InfoLevel)
 
 	c := data.MakeControllers(db, httpLogger)
+
+	bot.StartTelegramBot(telegramToken)
 
 	err = client.NewController(db, r, &c)
 	if err != nil {

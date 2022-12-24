@@ -10,10 +10,11 @@ import (
 
 type Reward struct {
 	axcrudobject.Model
-	Ip    string
-	Hash  string
-	Timer time.Time
-	Can   bool `gorm:"-"`
+	Ip        string
+	Hash      string
+	Timer     time.Time
+	Can       bool `gorm:"-"`
+	UserRefer uint `gorm:"primaryKey" json:"-"`
 }
 
 func (i *Reward) AfterFind(tx *gorm.DB) (err error) {
