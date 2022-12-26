@@ -29,6 +29,9 @@ var (
 
 	//go:embed "template/winning.html"
 	winningTemplate []byte
+
+	//go:embed "template/admin_winning.html"
+	adminWinningTemplate []byte
 )
 
 var xAuthSessionName = "x-auth-session"
@@ -46,6 +49,10 @@ type LoginRequest struct {
 type DataIndexPost struct {
 	Timer time.Time  `json:"timer"`
 	Price data.Price `json:"price"`
+}
+
+type DataAdminPage struct {
+	Data []data.User `json:"data"`
 }
 
 const IP = "127.0.0.1"
@@ -137,6 +144,7 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 	r.Get("/lk", wrap(lk))
 	r.Get("/reward", wrap(reward))
 	r.Get("/reward/{hash}", wrap(rewardPrice))
+	r.Get("/admin/reward", wrap(adminRewardPrice))
 	r.Handle("/static/*", http.FileServer(http.FS(htmlStatic)))
 	return nil
 }
@@ -221,7 +229,7 @@ func lk(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers
 		sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
 		http.SetCookie(w, &sessionCookie)
 	}
-	/*dataR, err := c.Reward.Get(ip, session)
+	dataR, err := c.User.Get(session)
 
 	if err != nil {
 		w.WriteHeader(500)
@@ -229,8 +237,7 @@ func lk(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers
 		w.Write(([]byte)(err.Error()))
 		return
 	}
-	dataLk := DataLkPage{Data: dataR}*/
-	var dataLk interface{}
+	dataLk := DataIndexPage{Data: dataR}
 	// Generate template
 	result, err := Render(lkTemplate, dataLk)
 
@@ -339,6 +346,64 @@ func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 	w.Write([]byte(dataR.Data))
 }
 
+func adminRewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
+	cookie, err := r.Cookie(xAuthSessionName)
+	var session string
+	if err != nil {
+		if err != http.ErrNoCookie {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+	} else {
+		session = cookie.Value
+	}
+	if session == "" {
+		sessionUuid, err := uuid.NewUUID()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		session = sessionUuid.String()
+		sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+		err = c.User.CreateSession(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to set user to db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		http.SetCookie(w, &sessionCookie)
+	}
+	dataU, err := c.User.Get(session)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to get from db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+
+	if !dataU.Admin {
+		w.WriteHeader(403)
+		log.Error().Err(err).Msg("you not admin")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+
+	dataR := c.User.GetAll()
+	dataLk := DataAdminPage{Data: dataR}
+	// Generate template
+	result, err := Render(adminWinningTemplate, dataLk)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to render")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	w.Write(result)
+}
+
 func mkSlice(args ...interface{}) []interface{} {
 	return args
 }
@@ -348,8 +413,17 @@ func dateFormat(date time.Time) string {
 		date.Day(), date.Month(), date.Year())
 }
 
+func getPrices(dataU data.User) bool {
+	for _, price := range dataU.Prices {
+		if price.Win {
+			return true
+		}
+	}
+	return false
+}
+
 func Render(templateByte []byte, data interface{}) ([]byte, error) {
-	funcMap := map[string]interface{}{"mkSlice": mkSlice, "dateFormat": dateFormat}
+	funcMap := map[string]interface{}{"mkSlice": mkSlice, "dateFormat": dateFormat, "getPrices": getPrices}
 	t, err := template.New("").Funcs(funcMap).Parse(string(templateByte))
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create template")

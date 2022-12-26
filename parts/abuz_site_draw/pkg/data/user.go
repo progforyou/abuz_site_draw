@@ -30,7 +30,7 @@ var Admins = []string{"nikolay35977"}
 
 const TIME = 24
 
-func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
+func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 	u.Admin = hasIsArrayStr(Admins, u.Telegram)
 	return
 }
@@ -48,6 +48,8 @@ type UserController struct {
 	CheckReward    func(string) bool
 	Login          func(string, string) error
 	GetRewardPrice func(string, string) (Price, error)
+	GetAll         func() []User
+	GetAllIps      func(uint64) ([]Ip, error)
 }
 
 func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
@@ -140,6 +142,19 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				}
 			}
 			return Price{}, errors.New("none price")
+		},
+		GetAll: func() []User {
+			var users []User
+			db.Preload("Prices").Preload("Ip").Find(&users)
+			return users
+		},
+		GetAllIps: func(uid uint64) ([]Ip, error) {
+			var user User
+			user.ID = uid
+			if err := db.Preload("Ip").Find(&user).Error; err != nil {
+				return nil, err
+			}
+			return user.Ip, nil
 		},
 	}
 }
