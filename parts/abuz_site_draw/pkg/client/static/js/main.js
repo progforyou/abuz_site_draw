@@ -208,11 +208,9 @@ window.addEventListener("click", function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    let btn = document.getElementById("widget_login")
+    btn.innerHTML = `<button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();"> <div class="m-auto flex">Войти в личный кабинет </div></button>`
     startRandomItems()
-    /*
-    var f = document.getElementById("telegram-login-abuz_telegram_access_bot");
-    var btnf = f.getElementsByTagName("button")[0]
-    btnf.style.background = "initial"*/
     if (logined) {
         if (can) {
             var clock = document.getElementById("game-time");

@@ -78,12 +78,20 @@
                         </ul>
                     </div>
 
-                    <!--<a href="https://oauth.telegram.org/auth?bot_id=5922829007&origin=http%3A%2F%2F127.0.0.1&embed=1&request_access=write&return_to=http%3A%2F%2F127.0.0.1%2F" class="hidden lg:flex items-center border-2 buy transition-colors">
+                    <!--<button class="hidden lg:flex items-center border-2 buy transition-colors">
                         <div class="m-auto flex">
                             Войти в личный кабинет
                         </div>
-                    </a>-->
-                    <script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuz_telegram_access_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+                    </button>-->
+                    <div class="tgme_widget_login medium nouserpic" id="widget_login">
+                        <button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();">
+                        <div class="m-auto flex">
+                            Войти в личный кабинет
+                        </div>
+                    </button>
+                    </div>
+
+                    <!--<script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuz_telegram_access_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>-->
                 </div>
                 <div class="block lg:hidden cursor-pointer" onclick="toggleMenu()" id="menu-toggler-div">
                     <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -635,7 +643,15 @@
 
 <img src="../static/img/left-garland.png" alt="garland" class="left-garland body-garland">
 <img src="../static/img/right-garland.png" alt="garland" class="right-garland body-garland">
+<script src="../static/js/tg.js"></script>
+<script>TWidgetLogin.init('widget_login', 5922829007, {"origin":"http://127.0.0.1/"}, false, "en"); </script>
 <script>
+    window.addEventListener("message", function(event) {
+        let btn = document.getElementById("widget_login")
+        btn.innerHTML = `<button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();"> <div class="m-auto flex">Войти в личный кабинет </div></button>`
+        console.log("tg event", event)
+    }, false);
+
     let menu = document.getElementById('menu');
     let toggler = document.getElementById('menu-toggler');
     let togglerI = document.getElementById('menu-toggler-div');

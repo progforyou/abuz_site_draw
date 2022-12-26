@@ -66,15 +66,6 @@ header a.buy{
     font-size: 16px;
 }
 
-button.tgme_widget_login_button{
-    background: initial;
-    border-radius: 300px;
-    font-weight: 600;
-    font-size: 16px;
-    font-family: var(--font);
-    border: 2px solid #FFFFFF;
-}
-
 header button.buy:hover,
 header a.buy:hover {
     color: #CF3535;
@@ -95,6 +86,10 @@ header a.buy:focus svg path {
 header button.buy:hover svg path,
 header a.buy:hover svg path {
     fill: #CF3535;
+}
+
+header button.buy.tgme_widget_login_button{
+    width: 200px !important;
 }
 
 
