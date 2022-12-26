@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="../static/css/lk.css">
 </head>
 <body>
-<div class="relative" id="admin-modal" style="display: none; z-index: 1000;" aria-labelledby="modal-title" role="dialog">
+<div class="relative" id="admin-modal" style="display: none; z-index: 1000;" aria-labelledby="modal-title"
+     role="dialog">
 
     <div class="background fixed inset-0 transition-opacity"></div>
 
@@ -19,7 +20,7 @@
                 <h2 class="big-text">
                     Айпи
                 </h2>
-                <div class="admin-modal-table mt-12">
+                <div class="admin-modal-table mt-12" id="admin-modal-ip-body">
                     <div class="admin-modal-table-header row flex">
                         <div>
                             IP
@@ -31,65 +32,10 @@
                             Дата
                         </div>
                     </div>
-                    <div class="admin-modal-table-body row flex">
-                        <div>
-                            28348234920
-                        </div>
-                        <div>
-                            Russia
-                        </div>
-                        <div>
-                            11.12.2022
-                        </div>
-                    </div>
-                    <div class="admin-modal-table-body row flex">
-                        <div>
-                            28348234920
-                        </div>
-                        <div>
-                            Russia
-                        </div>
-                        <div>
-                            11.12.2022
-                        </div>
-                    </div>
-                    <div class="admin-modal-table-body row flex">
-                        <div>
-                            28348234920
-                        </div>
-                        <div>
-                            Russia
-                        </div>
-                        <div>
-                            11.12.2022
-                        </div>
-                    </div>
-                    <div class="admin-modal-table-body row flex">
-                        <div>
-                            28348234920
-                        </div>
-                        <div>
-                            Russia
-                        </div>
-                        <div>
-                            11.12.2022
-                        </div>
-                    </div>
-                    <div class="admin-modal-table-body row flex">
-                        <div>
-                            28348234920
-                        </div>
-                        <div>
-                            Russia
-                        </div>
-                        <div>
-                            11.12.2022
-                        </div>
-                    </div>
                 </div>
-                    <button class="close mt-20 mx-auto" id="admin-modal-close">
-                        Закрыть
-                    </button>
+                <button class="close mt-20 mx-auto" id="admin-modal-close" onclick="closeMW()">
+                    Закрыть
+                </button>
             </div>
         </div>
     </div>
@@ -184,13 +130,13 @@
                         {{if getPrices .}} Есть {{else}} Нет {{end}}
                     </div>
                     <div>
-                        <a href="#">
+                        <a href="/admin/reward/{{.ID}}">
                             Перейти
                         </a>
                     </div>
                     <div class="flex justify-between">
                         <div>
-                            <a href="/admin/ips/{{.ID}}">
+                            <a href="#" onclick="openIps({{.ID}})">
                                 Перейти
                             </a>
                         </div>
@@ -222,5 +168,41 @@
     </div>
 
 </div>
+<script>
+    function openIps(id) {
+        fetch(`/admin/ips/${id}`, {
+            method: 'GET'
+        }).then(r => {
+            r.json().then(r => {
+                let write = []
+                if (!r.data.length) return
+                r.data.map(e => {
+                    write.push(document.createRange().createContextualFragment(`
+                                    <div class="admin-modal-table-body row flex">
+                                <div>
+                                    ${e.address}
+                                </div>
+                                <div>
+                                    ${e.location}
+                                </div>
+                                <div>
+                                    ${e.date}
+                                </div>
+                            </div>
+                    `))
+                })
+                let b = document.getElementById("admin-modal-ip-body")
+                console.log(write)
+                b.appendChild(...write)
+                let win =  document.getElementById("admin-modal")
+                win.style.display = "block"
+            });
+        });
+    }
+    function closeMW() {
+        let win =  document.getElementById("admin-modal")
+        win.style.display = "none"
+    }
+</script>
 </body>
 </html>

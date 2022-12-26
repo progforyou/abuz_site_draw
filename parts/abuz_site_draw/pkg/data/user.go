@@ -2,16 +2,54 @@ package data
 
 import (
 	"abuz_site_draw/shared/axcrudobject"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
+	"io/ioutil"
+	"net/http"
 	"time"
 )
 
 type Ip struct {
 	axcrudobject.Model
-	Address   string `json:"address"`
-	UserRefer uint   `gorm:"primaryKey" json:"-"`
+	Address   string    `json:"address"`
+	Location  string    `json:"location"`
+	Date      time.Time `json:"-"`
+	ParseDate string    `json:"date"`
+	UserRefer uint      `gorm:"primaryKey" json:"-"`
+}
+
+func (i *Ip) BeforeCreate(tx *gorm.DB) (err error) {
+	var objIp map[string]interface{}
+	i.Date = time.Now()
+	href := "http://ip-api.com/json/" + i.Address
+	resp, err := http.Get(href)
+	if err != nil {
+		log.Error().Err(err)
+		return err
+	}
+	bodyIp, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Error().Err(err).Msg("read body")
+		return err
+	}
+	if err := json.Unmarshal(bodyIp, &objIp); err != nil {
+		log.Error().Err(err).Msg("decode json")
+		return err
+	}
+	if objIp["status"] == "fail" {
+		return
+	}
+	i.Location = objIp["country"].(string)
+	return
+}
+
+func (i *Ip) AfterFind(tx *gorm.DB) (err error) {
+	i.ParseDate = fmt.Sprintf("%02d.%02d.%d", i.Date.Day(), i.Date.Month(), i.Date.Year())
+	return
 }
 
 type User struct {
@@ -50,6 +88,7 @@ type UserController struct {
 	GetRewardPrice func(string, string) (Price, error)
 	GetAll         func() []User
 	GetAllIps      func(uint64) ([]Ip, error)
+	GetById        func(uid uint64) (User, error)
 }
 
 func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
@@ -155,6 +194,14 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				return nil, err
 			}
 			return user.Ip, nil
+		},
+		GetById: func(uid uint64) (User, error) {
+			var obj User
+			obj.ID = uid
+			if err := db.Preload("Prices").Find(&obj).Error; err != nil {
+				return User{}, err
+			}
+			return obj, nil
 		},
 	}
 }

@@ -13,6 +13,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
 	"net/http"
+	"strconv"
 	"text/template"
 	"time"
 )
@@ -53,6 +54,10 @@ type DataIndexPost struct {
 
 type DataAdminPage struct {
 	Data []data.User `json:"data"`
+}
+
+type DataAdminGet struct {
+	Data []data.Ip `json:"data"`
 }
 
 const IP = "127.0.0.1"
@@ -145,6 +150,61 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 	r.Get("/reward", wrap(reward))
 	r.Get("/reward/{hash}", wrap(rewardPrice))
 	r.Get("/admin/reward", wrap(adminRewardPrice))
+	r.Get("/admin/reward/{id}", wrap(adminRewardPrices))
+	r.Get("/admin/ips/{id}", func(w http.ResponseWriter, r *http.Request) {
+		ids := chi.URLParam(r, "id")
+		id, err := strconv.ParseUint(ids, 10, 64)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to set user to db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		cookie, err := r.Cookie(xAuthSessionName)
+		var session string
+		if err != nil {
+			if err != http.ErrNoCookie {
+				http.Error(w, err.Error(), http.StatusUnauthorized)
+				return
+			}
+		} else {
+			session = cookie.Value
+		}
+		if session == "" {
+			sessionUuid, err := uuid.NewUUID()
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			session = sessionUuid.String()
+			sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+			err = c.User.CreateSession(session)
+			if err != nil {
+				w.WriteHeader(500)
+				log.Error().Err(err).Msg("fail to set user to db")
+				w.Write(([]byte)(err.Error()))
+				return
+			}
+			http.SetCookie(w, &sessionCookie)
+		}
+		dataR, err := c.User.GetAllIps(id)
+
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get from db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		jsonBytes, err := json.Marshal(DataAdminGet{Data: dataR})
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to marshal json")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		w.WriteHeader(200)
+		w.Write(jsonBytes)
+	})
 	r.Handle("/static/*", http.FileServer(http.FS(htmlStatic)))
 	return nil
 }
@@ -394,6 +454,63 @@ func adminRewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *da
 	dataLk := DataAdminPage{Data: dataR}
 	// Generate template
 	result, err := Render(adminWinningTemplate, dataLk)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to render")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	w.Write(result)
+}
+
+func adminRewardPrices(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
+	ids := chi.URLParam(r, "id")
+	id, err := strconv.ParseUint(ids, 10, 64)
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to set user to db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	cookie, err := r.Cookie(xAuthSessionName)
+	var session string
+	if err != nil {
+		if err != http.ErrNoCookie {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+	} else {
+		session = cookie.Value
+	}
+	if session == "" {
+		sessionUuid, err := uuid.NewUUID()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		session = sessionUuid.String()
+		sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+		err = c.User.CreateSession(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to set user to db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		http.SetCookie(w, &sessionCookie)
+	}
+	dataR, err := c.User.GetById(id)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to get from db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	dataLk := DataIndexPage{Data: dataR}
+	// Generate template
+	result, err := Render(winningTemplate, dataLk)
 
 	if err != nil {
 		w.WriteHeader(500)
