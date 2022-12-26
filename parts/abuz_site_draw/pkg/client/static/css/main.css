@@ -66,6 +66,15 @@ header a.buy{
     font-size: 16px;
 }
 
+button.tgme_widget_login_button{
+    background: initial;
+    border-radius: 300px;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: var(--font);
+    border: 2px solid #FFFFFF;
+}
+
 header button.buy:hover,
 header a.buy:hover {
     color: #CF3535;
@@ -596,7 +605,7 @@ main .flicker.item-6 {
     border-radius: 40px;
     width: 464px;
     height: 286px;
-    padding: 2.8rem 5.7rem 3.5rem 5.8rem;
+    padding: 1.8rem 2.7rem 1.5rem 3.8rem;
 }
 
 #game-modal .modal-container .modal-header {

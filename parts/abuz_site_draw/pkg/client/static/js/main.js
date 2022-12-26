@@ -1,5 +1,28 @@
 let currentPosition = 1
 
+async function onTelegramAuth(user) {
+    let t = [], ts = ""
+    let user_new = {...user}
+    delete user_new.hash
+    Object.keys(user_new).map(e => {
+        t.push(`${e}=${user_new[e]}`)
+    })
+    t.sort()
+    ts = t.join("\n")
+    const rawResponse = await fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({telegram: user.username, hash: user.hash, hash_data: ts})
+    });
+    const content = await rawResponse.text();
+    if (content === "OK"){
+        window.location.href = "/lk"
+    }
+}
+
 document.getElementById("horizontal-scroller")
     .addEventListener('wheel', function (event) {
         if (event.deltaMode === event.DOM_DELTA_PIXEL) {
@@ -23,7 +46,7 @@ document.getElementById("horizontal-scroller")
                 console.log(currentPosition)
                 for (let i = 1; i <= 5; i++) {
                     let item = document.getElementById(`scroll-ellips-${i}`)
-                    if (i === currentPosition){
+                    if (i === currentPosition) {
                         item.classList.add("active")
                     } else {
                         item.classList.remove("active")
@@ -47,7 +70,7 @@ document.getElementById("start").addEventListener('click', getPrice)
 
 document.getElementById("start-mobile").addEventListener('click', getPrice)
 
-async function getPrice (e) {
+async function getPrice(e) {
     const rawResponse = await fetch('/', {
         method: 'POST',
         headers: {
@@ -71,8 +94,8 @@ async function getPrice (e) {
 
 async function startRandomItems() {
     let tmp = ["flicker-item-1", "flicker-item-2", "flicker-item-3", "flicker-item-4", "flicker-item-5", "flicker-item-6"]
-    while (tmp.length > 0){
-        var item = tmp[Math.floor(Math.random()*tmp.length)];
+    while (tmp.length > 0) {
+        var item = tmp[Math.floor(Math.random() * tmp.length)];
         tmp = tmp.filter(e => e !== item)
         let e = document.getElementById(item)
         e.classList.add("animate")
@@ -166,36 +189,43 @@ function initializeClock(id, endtime) {
         if (t.total <= 0) {
             var button = document.getElementById("start")
             button.classList.remove("disable");
-        var button_mobile = document.getElementById("start-mobile")
-        button_mobile.classList.remove("disable");
+            var button_mobile = document.getElementById("start-mobile")
+            button_mobile.classList.remove("disable");
             clearInterval(timeinterval);
         }
     }, 1000);
 }
+
 var modalI = document.getElementById("game-modal-inner");
 var modal = document.getElementById("game-modal");
-    window.addEventListener("click", function(event) {
-        if (event.target === modalI) {
-            modal.style.display = "none";
-        }
-        if (!(event.target === menu || event.target === toggler || event.target === togglerI || event.target === togglerP)){
-            menu.classList.add("hidden")
-        }
+window.addEventListener("click", function (event) {
+    if (event.target === modalI) {
+        modal.style.display = "none";
+    }
+    if (!(event.target === menu || event.target === toggler || event.target === togglerI || event.target === togglerP)) {
+        menu.classList.add("hidden")
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     startRandomItems()
-    if (can) {
-        initializeClock("game-time", endTime)
-        initializeClock("game-time-mobile", endTime)
-    } else {
-        var clock = document.getElementById("game-time");
-        var clock_mobile = document.getElementById("game-time-mobile");
-        clock.innerHTML = "00:00:00"
-        clock_mobile.innerHTML = "00:00:00"
-        var button = document.getElementById("start")
-        var button_mobile = document.getElementById("start-mobile")
-        button.classList.remove("disable");
-        button_mobile.classList.remove("disable");
+    /*
+    var f = document.getElementById("telegram-login-abuz_telegram_access_bot");
+    var btnf = f.getElementsByTagName("button")[0]
+    btnf.style.background = "initial"*/
+    if (logined) {
+        if (can) {
+            var clock = document.getElementById("game-time");
+            var clock_mobile = document.getElementById("game-time-mobile");
+            clock.innerHTML = "00:00:00"
+            clock_mobile.innerHTML = "00:00:00"
+            var button = document.getElementById("start")
+            var button_mobile = document.getElementById("start-mobile")
+            button.classList.remove("disable");
+            button_mobile.classList.remove("disable");
+        } else {
+            initializeClock("game-time", endTime)
+            initializeClock("game-time-mobile", endTime)
+        }
     }
 });

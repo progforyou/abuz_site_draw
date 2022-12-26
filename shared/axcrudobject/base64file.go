@@ -1,7 +1,7 @@
 package axcrudobject
 
 import (
-	"bot_tasker/shared/aximgcolor"
+	"abuz_site_draw/shared/aximgcolor"
 	"bytes"
 	b64 "encoding/base64"
 	"fmt"

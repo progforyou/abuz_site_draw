@@ -1,9 +1,9 @@
 package main
 
 import (
-	"bot_tasker/parts/abuz_site_draw/pkg/bot"
-	"bot_tasker/parts/abuz_site_draw/pkg/client"
-	"bot_tasker/parts/abuz_site_draw/pkg/data"
+	"abuz_site_draw/parts/abuz_site_draw/pkg/bot"
+	"abuz_site_draw/parts/abuz_site_draw/pkg/client"
+	"abuz_site_draw/parts/abuz_site_draw/pkg/data"
 	"flag"
 	"fmt"
 	"github.com/go-chi/chi/v5"
@@ -22,11 +22,13 @@ import (
 var (
 	port          int
 	telegramToken string
+	ws            string
 )
 
 func init() {
-	flag.IntVar(&port, "port", 8000, "set port")
+	flag.IntVar(&port, "port", 80, "set port")
 	flag.StringVar(&telegramToken, "token", "5922829007:AAHFF6qFi0t4eVQvPuGp_F6p6g18lvrsAcw", "set telegram token")
+	flag.StringVar(&ws, "ws", "127.0.0.1", "set website domain")
 	flag.Parse()
 }
 
@@ -44,9 +46,9 @@ func main() {
 	r := chi.NewRouter()
 	httpLogger := log.With().Str("service", "http").Logger().Level(zerolog.InfoLevel)
 
-	c := data.MakeControllers(db, httpLogger)
+	c := data.MakeControllers(db, httpLogger, telegramToken)
 
-	bot.StartTelegramBot(telegramToken)
+	bot.StartTelegramBot(telegramToken, ws, &c)
 
 	err = client.NewController(db, r, &c)
 	if err != nil {

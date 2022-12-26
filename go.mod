@@ -1,4 +1,4 @@
-module bot_tasker
+module abuz_site_draw
 
 go 1.18
 

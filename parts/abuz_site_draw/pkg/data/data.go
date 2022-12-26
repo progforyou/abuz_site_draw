@@ -6,15 +6,15 @@ import (
 )
 
 type Controllers struct {
-	User   UserController
-	Reward RewardController
-	Price  PriceController
+	User          UserController
+	Price         PriceController
+	TelegramToken string
 }
 
-func MakeControllers(db *gorm.DB, baseLog zerolog.Logger) Controllers {
+func MakeControllers(db *gorm.DB, baseLog zerolog.Logger, telegramToken string) Controllers {
 	return Controllers{
-		User:   NewUserController(db, baseLog),
-		Reward: NewRewardController(db, baseLog),
-		Price:  NewPriceController(db, baseLog),
+		User:          NewUserController(db, baseLog),
+		Price:         NewPriceController(db, baseLog),
+		TelegramToken: telegramToken,
 	}
 }

@@ -1,7 +1,8 @@
 package data
 
 import (
-	"bot_tasker/shared/axcrudobject"
+	"abuz_site_draw/shared/axcrudobject"
+	"encoding/base64"
 	"github.com/rs/zerolog"
 	"gorm.io/gorm"
 	"math/rand"
@@ -21,11 +22,24 @@ type Price struct {
 	Type      PriceType `json:"type"`
 	Data      string    `json:"data"`
 	Date      time.Time `json:"date"`
+	Win       bool      `gorm:"-" json:"win"`
+	Hash      string    `json:"hash"`
 	UserRefer uint      `gorm:"primaryKey" json:"-"`
 }
 
 func (u *Price) BeforeCreate(tx *gorm.DB) (err error) {
 	u.Date = time.Now()
+	if u.Type != NonePrice {
+		//TODO generate random link on price here
+		s := "1"
+		h := base64.StdEncoding.EncodeToString([]byte(s))
+		u.Hash = h
+	}
+	return
+}
+
+func (u *Price) AfterFind(tx *gorm.DB) (err error) {
+	u.Win = u.Type != NonePrice
 	return
 }
 

@@ -75,70 +75,25 @@
             <h2 class="medium-header mt-10">Это твои призы. </h2>
             <div class="flex">
                 <div class="win-table card mt-6 mr-2">
-                    <div class="flex win-row">
-                        <div>
-                            <span class="lose">
-                                Проигрыш
-                            </span>
+                    {{ range .Data.Prices }}
+
+                        <div class="flex win-row">
+                            <div>
+                                <span class="{{if .Win}} win {{else}} lose {{end}}">
+                                    {{if .Win}} Выигрыш {{else}} Проигрыш {{end}}
+                                </span>
+                            </div>
+                            <div>
+                                {{if .Win}} {{if eq .Type 1}} Промокод {{end}} {{if eq .Type 2}} Скидка {{end}} {{else}} Промокод {{end}}
+                            </div>
+                            <div>
+                                {{dateFormat .Date}}
+                            </div>
+                            <div>
+                                {{if .Win}} <a href="/reward/{{.Hash}}">Забрать</a> {{else}} - {{end}}
+                            </div>
                         </div>
-                        <div>
-                            Промокод
-                        </div>
-                        <div>
-                            19.12.2022
-                        </div>
-                        <div>
-                            -
-                        </div>
-                    </div>
-                    <div class="flex win-row">
-                        <div>
-                            <span class="win">
-                                Выигрыш
-                            </span>
-                        </div>
-                        <div>
-                            Промокод
-                        </div>
-                        <div>
-                            19.12.2022
-                        </div>
-                        <div>
-                            Забрать
-                        </div>
-                    </div>
-                    <div class="flex win-row">
-                        <div>
-                            <span class="win">
-                                Выигрыш
-                            </span>
-                        </div>
-                        <div>
-                            Промокод
-                        </div>
-                        <div>
-                            19.12.2022
-                        </div>
-                        <div>
-                            Забрать
-                        </div>
-                    </div>
-                    <div class="flex win-row">
-                        <div>
-                            <span class="win">
-                                Выигрыш
-                            </span>
-                        </div>
-                        <div>
-                            Промокод
-                        </div>
-                        <div>
-                            19.12.2022
-                        </div>
-                        <div>
-                            Забрать
-                        </div>
-                    </div>
+                    {{ end }}
                 </div>
                 <div class="mt-6 support-inner">
                     <div class="card support flex">
