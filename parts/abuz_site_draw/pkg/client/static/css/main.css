@@ -650,6 +650,7 @@ main .flicker.item-6 {
 
 #game-modal .modal-container .modal-body #game-modal-body.promo {
     text-shadow: 0 0 6px #19B301;
+    font-size: 30px;
 }
 
 #game-modal .modal-container .modal-body #game-modal-body.none {

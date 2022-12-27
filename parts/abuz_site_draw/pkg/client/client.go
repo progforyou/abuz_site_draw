@@ -163,7 +163,8 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 	})
 	r.Get("/lk", wrap(lk))
 	r.Get("/reward", wrap(reward))
-	r.Get("/reward/{hash}", wrap(rewardPrice))
+	r.Get("/promo/{hash}", wrap(rewardPromo))
+	r.Get("/price/{hash}", wrap(rewardPrice))
 	r.Get("/admin/reward", wrap(adminRewardPrice))
 	r.Get("/admin/reward/{id}", wrap(adminRewardPrices))
 	r.Get("/admin/ips/{id}", func(w http.ResponseWriter, r *http.Request) {
@@ -524,6 +525,65 @@ func reward(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Control
 	w.Write(result)
 }
 
+func rewardPromo(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
+	hash := chi.URLParam(r, "hash")
+	cookie, err := r.Cookie(xAuthSessionName)
+	var session string
+	if err != nil {
+		if err != http.ErrNoCookie {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+	} else {
+		session = cookie.Value
+	}
+	if session == "" {
+		sessionUuid, err := uuid.NewUUID()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		session = sessionUuid.String()
+		sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+		err = c.User.CreateSession(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to set user to db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		http.SetCookie(w, &sessionCookie)
+	}
+	dataR, err := c.User.GetRewardPrice(session, hash)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to get from db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+
+	dataU, err := c.User.Get(session)
+	if dataU.Ban {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	if dataU.ID == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("fail to render")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	dataP, err := c.Price.GetPromo(dataR.Data)
+	w.Write([]byte(dataP.Data))
+}
+
 func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
 	hash := chi.URLParam(r, "hash")
 	cookie, err := r.Cookie(xAuthSessionName)
@@ -579,7 +639,8 @@ func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 		w.Write(([]byte)(err.Error()))
 		return
 	}
-	w.Write([]byte(dataR.Data))
+	dataP, err := c.Price.GetPrice(dataR.Data)
+	w.Write([]byte(dataP.Data))
 }
 
 func adminRewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {

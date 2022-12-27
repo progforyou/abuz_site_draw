@@ -84,13 +84,13 @@
                                 </span>
                             </div>
                             <div>
-                                {{if .Win}} {{if eq .Type 1}} Промокод {{end}} {{if eq .Type 2}} Скидка {{end}} {{else}} Промокод {{end}}
+                                {{if .Win}} {{if eq .Type 1}} Промокод {{end}} {{if eq .Type 2}} Подарок {{end}} {{else}} Промокод {{end}}
                             </div>
                             <div>
                                 {{dateFormat .Date}}
                             </div>
                             <div>
-                                {{if .Win}} <a href="/reward/{{.Hash}}">Забрать</a> {{else}} - {{end}}
+                                {{if .Win}} <a href="/{{if eq .Type 1}}promo{{end}}{{if eq .Type 2}}price{{end}}/{{.Data}}">Забрать</a> {{else}} - {{end}}
                             </div>
                         </div>
                     {{ end }}

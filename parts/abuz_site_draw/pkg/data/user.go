@@ -143,7 +143,7 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				if err := db.Create(&ipObj).Error; err != nil {
 					return err
 				}
-				pricesObj := TestGeneratePrice()
+				pricesObj := TestGeneratePrice(db)
 				pricesObj.UserRefer = uint(obj.ID)
 				if err := db.Create(&pricesObj).Error; err != nil {
 					return err
@@ -232,7 +232,7 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				return Price{}, err
 			}
 			for _, price := range obj.Prices {
-				if price.Hash == hash {
+				if price.Data == hash {
 					return price, nil
 				}
 			}

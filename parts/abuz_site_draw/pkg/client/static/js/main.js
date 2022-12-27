@@ -18,7 +18,7 @@ async function onTelegramAuth(user) {
         body: JSON.stringify({telegram: user.username, hash: user.hash, hash_data: ts})
     });
     const content = await rawResponse.text();
-    if (content === "OK"){
+    if (content === "OK") {
         window.location.href = "/lk"
     }
 }
@@ -112,38 +112,25 @@ function createModalPrice(data) {
     let takeD = document.getElementById("take-price")
     let copyD = document.getElementById("modal-copy")
     let toyD = document.getElementById("game-modal-toy")
-    switch (data.price.type) {
-        case 0:
-            ticketD.classList.add("green")
-            typeD.innerText = "УВЫ :("
-            bodyD.innerText = data.price.data
-            bodyD.classList.add("none")
-            toyD.classList.add("none")
-            descriptionD.innerText = "Попробуй в следующий раз!"
-            takeD.innerText = "закрыть"
-            break;
-        case 1:
-            ticketD.classList.add("red")
-            typeD.innerText = "Промокод"
-            bodyD.innerText = data.price.data
-            bodyD.classList.add("promo")
-            toyD.classList.add("promo")
-            copyD.style.display = "block"
-            copyD.addEventListener('click', async function (e) {
-                navigator.clipboard.writeText(data.price.data)
-            })
-            descriptionD.innerText = `Скопируй и введи в @ABUZZBOT в раздел “промокоды”`
-            takeD.innerText = "закрыть"
-            break;
-        case 2:
-            ticketD.classList.add("green")
-            typeD.innerText = "Поздравляем!"
-            bodyD.innerText = data.price.data
-            bodyD.classList.add("price")
-            toyD.classList.add("price")
-            descriptionD.innerText = "Скидка на обучение"
-            takeD.innerText = "забрать"
-            break;
+    if (data.price.win) {
+        ticketD.classList.add("red")
+        typeD.innerText = "УРА !"
+        bodyD.innerText = "ТЫ  ВЫИГРАЛ"
+        bodyD.classList.add("promo")
+        toyD.classList.add("promo")
+        descriptionD.innerText = `Зайди в личный кабинет и проверь свой выигрыш`
+        takeD.innerText = "забрать"
+        takeD.onclick = function () {
+            window.location = "/lk"
+        }
+    } else {
+        ticketD.classList.add("green")
+        typeD.innerText = "УВЫ :("
+        bodyD.innerText = data.price.data
+        bodyD.classList.add("none")
+        toyD.classList.add("none")
+        descriptionD.innerText = "Попробуй в следующий раз!"
+        takeD.innerText = "закрыть"
     }
     let modal = document.getElementById("game-modal")
     modal.style.display = "block"
@@ -207,7 +194,7 @@ window.addEventListener("click", function (event) {
     }
 });
 
-async function ban(tg){
+async function ban(tg) {
     const rawResponse = await fetch(`/admin/ban/${tg}`, {
         method: 'GET',
     });
@@ -215,7 +202,7 @@ async function ban(tg){
     console.log(content)
 }
 
-async function unban(tg){
+async function unban(tg) {
     const rawResponse = await fetch(`/admin/unban/${tg}`, {
         method: 'GET',
     });
