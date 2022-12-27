@@ -60,7 +60,7 @@ type DataAdminGet struct {
 	Data []data.Ip `json:"data"`
 }
 
-const IP = "127.0.0.1"
+//const IP = "127.0.0.1"
 
 func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 	log.Info().Msg("create page controller")
@@ -88,7 +88,6 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 			return
 		}
 		ip := r.Header.Get("X-Real-IP")
-		ip = IP
 		dataU, err := c.User.Get(session)
 		if err != nil {
 			w.WriteHeader(500)
@@ -416,8 +415,6 @@ func index(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controll
 
 func lk(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
 	cookie, err := r.Cookie(xAuthSessionName)
-	/*ip := r.Header.Get("X-Real-IP")
-	ip = IP*/
 	var session string
 	if err != nil {
 		if err != http.ErrNoCookie {
