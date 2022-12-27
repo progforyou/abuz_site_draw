@@ -89,6 +89,21 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 		}
 		ip := r.Header.Get("X-Real-IP")
 		ip = IP
+		dataU, err := c.User.Get(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if dataU.Ban {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
+		if dataU.ID == 0 {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
 		err = c.User.StartGame(ip, session)
 		if err != nil {
 			w.WriteHeader(500)
@@ -187,6 +202,23 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 			}
 			http.SetCookie(w, &sessionCookie)
 		}
+		dataU, err := c.User.Get(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if dataU.ID == 0 {
+			w.WriteHeader(403)
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if !dataU.Admin {
+			w.WriteHeader(403)
+			w.Write(([]byte)(err.Error()))
+			return
+		}
 		dataR, err := c.User.GetAllIps(id)
 
 		if err != nil {
@@ -204,6 +236,118 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 		}
 		w.WriteHeader(200)
 		w.Write(jsonBytes)
+	})
+	r.Get("/admin/ban/{tg}", func(w http.ResponseWriter, r *http.Request) {
+		tg := chi.URLParam(r, "tg")
+		cookie, err := r.Cookie(xAuthSessionName)
+		var session string
+		if err != nil {
+			if err != http.ErrNoCookie {
+				http.Error(w, err.Error(), http.StatusUnauthorized)
+				return
+			}
+		} else {
+			session = cookie.Value
+		}
+		if session == "" {
+			sessionUuid, err := uuid.NewUUID()
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			session = sessionUuid.String()
+			sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+			err = c.User.CreateSession(session)
+			if err != nil {
+				w.WriteHeader(500)
+				log.Error().Err(err).Msg("fail to set user to db")
+				w.Write(([]byte)(err.Error()))
+				return
+			}
+			http.SetCookie(w, &sessionCookie)
+		}
+		dataU, err := c.User.Get(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if dataU.ID == 0 {
+			w.WriteHeader(403)
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if !dataU.Admin {
+			w.WriteHeader(403)
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		err = c.User.Block(tg)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get from db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		w.WriteHeader(200)
+		w.Write([]byte("OK"))
+	})
+	r.Get("/admin/unban/{tg}", func(w http.ResponseWriter, r *http.Request) {
+		tg := chi.URLParam(r, "tg")
+		cookie, err := r.Cookie(xAuthSessionName)
+		var session string
+		if err != nil {
+			if err != http.ErrNoCookie {
+				http.Error(w, err.Error(), http.StatusUnauthorized)
+				return
+			}
+		} else {
+			session = cookie.Value
+		}
+		if session == "" {
+			sessionUuid, err := uuid.NewUUID()
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			session = sessionUuid.String()
+			sessionCookie := http.Cookie{Name: xAuthSessionName, Value: session, Expires: time.Now().Add(365 * 24 * time.Hour)}
+			err = c.User.CreateSession(session)
+			if err != nil {
+				w.WriteHeader(500)
+				log.Error().Err(err).Msg("fail to set user to db")
+				w.Write(([]byte)(err.Error()))
+				return
+			}
+			http.SetCookie(w, &sessionCookie)
+		}
+		dataU, err := c.User.Get(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if dataU.ID == 0 {
+			w.WriteHeader(403)
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if !dataU.Admin {
+			w.WriteHeader(403)
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		err = c.User.UnBlock(tg)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get from db")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		w.WriteHeader(200)
+		w.Write([]byte("OK"))
 	})
 	r.Handle("/static/*", http.FileServer(http.FS(htmlStatic)))
 	return nil
@@ -253,6 +397,9 @@ func index(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controll
 		w.Write(([]byte)(err.Error()))
 		return
 	}
+	if dataU.Ban {
+		dataU = data.User{}
+	}
 	dataIndex := DataIndexPage{Data: dataU}
 	// Generate template
 	result, err := Render(indexTemplate, dataIndex)
@@ -297,6 +444,14 @@ func lk(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers
 		w.Write(([]byte)(err.Error()))
 		return
 	}
+	if dataR.Ban {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	if dataR.ID == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
 	dataLk := DataIndexPage{Data: dataR}
 	// Generate template
 	result, err := Render(lkTemplate, dataLk)
@@ -339,6 +494,16 @@ func reward(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Control
 		http.SetCookie(w, &sessionCookie)
 	}
 	dataR, err := c.User.Get(session)
+
+	if dataR.Ban {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	if dataR.ID == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
 
 	if err != nil {
 		w.WriteHeader(500)
@@ -397,6 +562,17 @@ func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 		return
 	}
 
+	dataU, err := c.User.Get(session)
+	if dataU.Ban {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	if dataU.ID == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
 	if err != nil {
 		w.WriteHeader(500)
 		log.Error().Err(err).Msg("fail to render")
@@ -440,6 +616,15 @@ func adminRewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *da
 		w.WriteHeader(500)
 		log.Error().Err(err).Msg("fail to get from db")
 		w.Write(([]byte)(err.Error()))
+		return
+	}
+
+	if dataU.Ban {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	if dataU.ID == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
@@ -505,6 +690,22 @@ func adminRewardPrices(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *d
 	if err != nil {
 		w.WriteHeader(500)
 		log.Error().Err(err).Msg("fail to get from db")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	dataU, err := c.User.Get(session)
+	if dataU.Ban {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	if dataU.ID == 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	if !dataU.Admin {
+		w.WriteHeader(403)
+		log.Error().Err(err).Msg("you not admin")
 		w.Write(([]byte)(err.Error()))
 		return
 	}

@@ -207,6 +207,22 @@ window.addEventListener("click", function (event) {
     }
 });
 
+async function ban(tg){
+    const rawResponse = await fetch(`/admin/ban/${tg}`, {
+        method: 'GET',
+    });
+    const content = await rawResponse.text();
+    console.log(content)
+}
+
+async function unban(tg){
+    const rawResponse = await fetch(`/admin/unban/${tg}`, {
+        method: 'GET',
+    });
+    const content = await rawResponse.text();
+    console.log(content)
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     let btn = document.getElementById("widget_login")
     btn.innerHTML = `<button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();"> <div class="m-auto flex">Войти в личный кабинет </div></button>`

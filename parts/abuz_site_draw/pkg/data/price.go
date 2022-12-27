@@ -24,7 +24,7 @@ type Price struct {
 	Date      time.Time `json:"date"`
 	Win       bool      `gorm:"-" json:"win"`
 	Hash      string    `json:"hash"`
-	UserRefer uint      `gorm:"primaryKey" json:"-"`
+	UserRefer uint      `json:"-"`
 }
 
 func (u *Price) BeforeCreate(tx *gorm.DB) (err error) {
