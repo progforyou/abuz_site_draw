@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bot_tasker/shared/ospathlib"
+	"abuz_site_draw/shared/ospathlib"
 	"flag"
 	"fmt"
 	"github.com/logrusorgru/aurora"
