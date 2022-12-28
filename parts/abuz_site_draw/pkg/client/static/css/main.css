@@ -527,7 +527,7 @@ main .flicker.item-6 {
     width: 108px;
     height: 108px;
     border-radius: 500px;
-    background: linear-gradient(0deg, #FF0000, #FF0000);
+    background: #f9ff01;
 }
 
 .wish-section .wish-scroll .item .text {
