@@ -212,19 +212,21 @@ async function unban(tg) {
 
 document.addEventListener('DOMContentLoaded', function () {
     startRandomItems()
-    if (logined) {
-        if (can) {
-            var clock = document.getElementById("game-time");
-            var clock_mobile = document.getElementById("game-time-mobile");
-            clock.innerHTML = "00:00:00"
-            clock_mobile.innerHTML = "00:00:00"
-            var button = document.getElementById("start")
-            var button_mobile = document.getElementById("start-mobile")
-            button.classList.remove("disable");
-            button_mobile.classList.remove("disable");
-        } else {
-            initializeClock("game-time", endTime)
-            initializeClock("game-time-mobile", endTime)
-        }
+    if (!baned){
+        if (logined) {
+            if (can) {
+                var clock = document.getElementById("game-time");
+                var clock_mobile = document.getElementById("game-time-mobile");
+                clock.innerHTML = "00:00:00"
+                clock_mobile.innerHTML = "00:00:00"
+                var button = document.getElementById("start")
+                var button_mobile = document.getElementById("start-mobile")
+                button.classList.remove("disable");
+                button_mobile.classList.remove("disable");
+            } else {
+                initializeClock("game-time", endTime)
+                initializeClock("game-time-mobile", endTime)
+            }
+    }
     }
 });

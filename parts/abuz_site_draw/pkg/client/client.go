@@ -146,6 +146,17 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 			w.Write(([]byte)(err.Error()))
 			return
 		}
+		dataU, err := c.User.Get(session)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("fail to get")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if dataU.Ban {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
 		if compareHash(login, c) {
 			err = c.User.Login(session, login.Telegram)
 			if err != nil {
