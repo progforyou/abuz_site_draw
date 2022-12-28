@@ -55,7 +55,7 @@ func (i *Ip) AfterFind(tx *gorm.DB) (err error) {
 type User struct {
 	axcrudobject.Model
 	Ip       []Ip      `gorm:"foreignKey:UserRefer" json:"ip"`
-	Telegram string    `json:"telegram"`
+	Telegram string    `gorm:"unique" json:"telegram"`
 	Prices   []Price   `gorm:"foreignKey:UserRefer" json:"prices"`
 	Hash     []Session `gorm:"foreignKey:UserRefer" json:"hash"`
 	Admin    bool      `json:"admin"`
@@ -182,9 +182,7 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				return nil
 			}
 			obj.Telegram = tg
-			if err := db.Create(&obj).Error; err != nil {
-				return err
-			}
+			db.Create(&obj)
 			o.UserRefer = uint(obj.ID)
 			if err := db.Save(&o).Error; err != nil {
 				return err
