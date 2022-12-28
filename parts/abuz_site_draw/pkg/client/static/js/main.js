@@ -112,7 +112,43 @@ function createModalPrice(data) {
     let takeD = document.getElementById("take-price")
     let copyD = document.getElementById("modal-copy")
     let toyD = document.getElementById("game-modal-toy")
-    if (data.price.win) {
+    switch (data.price.type){
+        case 0:
+            ticketD.classList.add("green")
+            typeD.innerText = "УВЫ :("
+            bodyD.innerText = data.price.data
+            bodyD.classList.add("none")
+            toyD.classList.add("none")
+            descriptionD.innerText = "Попробуй в следующий раз!"
+            takeD.innerText = "закрыть"
+            break;
+        case 1:
+            ticketD.classList.add("red")
+            typeD.innerText = "Промокод"
+            bodyD.innerText = "HNY23-15"
+            bodyD.classList.add("promo")
+            toyD.classList.add("promo")
+            copyD.style.display = "block"
+            copyD.addEventListener('click', async function (e) {
+                navigator.clipboard.writeText("HNY23-15")
+            })
+            descriptionD.innerText = `Скопируй и введи в @ABUZZBOT в раздел “промокоды”`
+            takeD.innerText = "закрыть"
+            break;
+        case 2:
+            ticketD.classList.add("green")
+            typeD.innerText = "УРА !"
+            bodyD.innerText = "ТЫ  ВЫИГРАЛ"
+            bodyD.classList.add("price")
+            toyD.classList.add("price")
+            descriptionD.innerText = `Зайди в личный кабинет и проверь свой выигрыш`
+            takeD.innerText = "забрать"
+            takeD.onclick = function () {
+                window.location = "/lk"
+            }
+            break;
+    }
+    /*if (data.price.win) {
         ticketD.classList.add("red")
         typeD.innerText = "УРА !"
         bodyD.innerText = "ТЫ  ВЫИГРАЛ"
@@ -131,7 +167,7 @@ function createModalPrice(data) {
         toyD.classList.add("none")
         descriptionD.innerText = "Попробуй в следующий раз!"
         takeD.innerText = "закрыть"
-    }
+    }*/
     let modal = document.getElementById("game-modal")
     modal.style.display = "block"
 }
