@@ -83,13 +83,14 @@
                             Войти в личный кабинет
                         </div>
                     </button>-->
-                    <div class="tgme_widget_login medium nouserpic" id="widget_login">
+                    <script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuz_telegram_access_bot" data-size="large" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+                    <!--<div class="tgme_widget_login medium nouserpic" id="widget_login">
                         <button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();">
                         <div class="m-auto flex">
                             Войти в личный кабинет
                         </div>
                     </button>
-                    </div>
+                    </div>-->
 
                     <!--<script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuz_telegram_access_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>-->
                 </div>
@@ -643,8 +644,8 @@
 
 <img src="../static/img/left-garland.png" alt="garland" class="left-garland body-garland">
 <img src="../static/img/right-garland.png" alt="garland" class="right-garland body-garland">
-<script src="../static/js/tg.js"></script>
-<script>TWidgetLogin.init('widget_login', 5922829007, {"origin":"http://127.0.0.1/"}, false, "en"); </script>
+<!--<script src="../static/js/tg.js"></script>
+<script>TWidgetLogin.init('widget_login', 5922829007, {"origin":"http://127.0.0.1/"}, false, "en"); </script>-->
 <script>
     window.addEventListener("message", function(event) {
         let btn = document.getElementById("widget_login")

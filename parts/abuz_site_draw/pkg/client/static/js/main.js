@@ -211,8 +211,6 @@ async function unban(tg) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    let btn = document.getElementById("widget_login")
-    btn.innerHTML = `<button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();"> <div class="m-auto flex">Войти в личный кабинет </div></button>`
     startRandomItems()
     if (logined) {
         if (can) {
