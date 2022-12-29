@@ -58,24 +58,15 @@ body {
 
 header .container-brand,
 aside .container-brand{
-    width: 125px;
+    background: black;
+    border-radius: 300px;
+}
+
+header .container-brand img,
+aside .container-brand img{
+    width: 180px;
     height: 34px;
-}
-
-header .brand,
-aside .brand{
-    font-family: var(--brand-font);
-    margin: auto;
-    color: var(--color-black);
-    text-transform: uppercase;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 26px;
-}
-
-header .brand span,
-aside .brand span{
-    color: var(--color-red);
+    object-fit: cover;
 }
 
 header .menu {
