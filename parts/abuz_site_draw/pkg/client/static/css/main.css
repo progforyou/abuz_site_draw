@@ -569,7 +569,7 @@ main .flicker.item-6 {
     width: 108px;
     height: 108px;
     border-radius: 500px;
-    background: #f9ff01;
+    background: transparent;
 }
 
 .wish-section .wish-scroll .item .text {
@@ -688,6 +688,7 @@ main .flicker.item-6 {
 
 #game-modal .modal-container .modal-body #game-modal-body.price {
     text-shadow: 0 0 6px #2400FF;
+    font-size: 30px;
 }
 
 #game-modal .modal-container .modal-body #game-modal-body.promo {
