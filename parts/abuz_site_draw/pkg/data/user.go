@@ -217,11 +217,6 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 		},
 		GetRewardPrice: func(session, hash string) (Price, error) {
 			var obj User
-			//TODO for result надо засунуть интерфейс
-			//Encoding, err := base64.StdEncoding.DecodeString(hash)
-			/*if err != nil {
-				return Price{}, err
-			}*/
 			var o Session
 			if err := db.Where("hash = ?", session).Find(&o).Error; err != nil {
 				return Price{}, err
