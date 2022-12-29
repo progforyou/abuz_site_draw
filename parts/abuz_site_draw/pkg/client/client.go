@@ -7,12 +7,16 @@ import (
 	"crypto/sha256"
 	"embed"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
+	"io/ioutil"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 	"text/template"
 	"time"
@@ -648,7 +652,40 @@ func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 		return
 	}
 	dataP, err := c.Price.GetPrice(dataR.Data)
-	w.Write([]byte(dataP.Data))
+	filename := fmt.Sprintf("%s.txt", dataP.Key)
+	path := filepath.Join("temp", filename)
+	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
+		f, err := os.Create(path)
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("error create file")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
+		f.Close()
+	}
+	streamFileBytes, err := ioutil.ReadFile(path)
+
+	if err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("file not found")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+
+	b := bytes.NewBuffer(streamFileBytes)
+
+	// stream straight to client(browser)
+	w.Header().Set("Content-type", "text/plain")
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
+
+	if _, err := b.WriteTo(w); err != nil {
+		w.WriteHeader(500)
+		log.Error().Err(err).Msg("file write")
+		w.Write(([]byte)(err.Error()))
+		return
+	}
+	os.Remove(path)
 }
 
 func adminRewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Controllers) {
