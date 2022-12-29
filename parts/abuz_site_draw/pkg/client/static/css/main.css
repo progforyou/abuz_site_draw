@@ -22,6 +22,7 @@ body {
 
 .my-container {
     max-width: 1309px;
+    width: 100%;
 }
 
 .mt-50px {
@@ -57,20 +58,18 @@ body {
 }
 
 header .container-brand,
-aside .container-brand{
+aside .container-brand,
+footer .container-brand{
     background: black;
     border-radius: 300px;
 }
 
 header .container-brand img,
-aside .container-brand img{
+aside .container-brand img,
+footer .container-brand img{
     width: 180px;
     height: 34px;
     object-fit: cover;
-}
-
-header .menu {
-    margin-right: 5.4rem;
 }
 
 header .menu-mobile{
@@ -664,7 +663,7 @@ main .flicker.item-6 {
 
 #game-modal .modal-container .modal-body .game-modal-price {
     font-weight: 700;
-    font-size: 100px;
+    font-size: 48px;
     line-height: 33px;
     color: var(--color-black);
     text-shadow: 0 0 6px #2400FF;
@@ -677,14 +676,18 @@ main .flicker.item-6 {
     margin-left: 1rem;
 }
 
-#game-modal .modal-container .modal-body #game-modal-body.price {
+#game-modal .modal-container .modal-body #game-modal-body.sale {
     text-shadow: 0 0 6px #2400FF;
     font-size: 30px;
 }
 
+#game-modal .modal-container .modal-body #game-modal-body.price{
+    text-shadow: 0 0 6px #19B301;
+    font-size: 45px;
+}
+
 #game-modal .modal-container .modal-body #game-modal-body.promo {
     text-shadow: 0 0 6px #19B301;
-    font-size: 30px;
 }
 
 #game-modal .modal-container .modal-body #game-modal-body.none {
@@ -695,8 +698,9 @@ main .flicker.item-6 {
 #game-modal .modal-container .modal-body .game-modal-description {
     font-weight: 400;
     font-size: 13px;
-    line-height: 33px;
+    line-height: 14px;
     margin-top: 1rem;
+    width: 90%;
 }
 
 #game-modal .modal-container .modal-footer .game-modal-button {
@@ -734,7 +738,8 @@ main .flicker.item-6 {
     bottom: -6rem;
 }
 
-#game-modal .modal-toy.promo {
+#game-modal .modal-toy.promo,
+#game-modal .modal-toy.price{
     bottom: 2rem;
     right: -3.2rem;
     transform: rotate(-34.92deg);
@@ -790,4 +795,40 @@ main .flicker.item-6 {
 
 .scroll-ellips.active svg circle{
     fill: #B9B9B9;
+}
+
+footer{
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
+footer .footer-nav{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #86868B;
+    margin-right: 60px;
+    align-items: center;
+    margin-left: auto;
+}
+
+footer .footer-nav li{
+    margin-right: 30px;
+}
+
+footer .btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 106px;
+    height: 30px;
+    background: #111111;
+    border-radius: 300px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 0 13px 0 15px;
+    color: #86868B;
 }

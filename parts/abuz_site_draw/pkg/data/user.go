@@ -109,7 +109,9 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 		CreateSession: func(session string) error {
 			var obj Session
 			obj.Hash = session
-			db.Create(&obj)
+			if err := db.Create(&obj).Error; err != nil {
+				return nil
+			}
 			return nil
 		},
 		Get: func(session string) (User, error) {

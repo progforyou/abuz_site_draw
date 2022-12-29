@@ -95,6 +95,18 @@
     }
 }
 
+@media (max-width: 1024px) {
+    header iframe {
+        margin-left: auto;
+        margin-right: 2rem;
+    }
+    footer .footer-nav{
+        margin: auto;
+    }
+    footer .btn{
+        margin: auto;
+    }
+}
 @media (max-width: 1020px) {
     .wish-section .wish-scroll .item .text {
         width: 300px;
@@ -387,6 +399,20 @@
         min-width: 240px;
         max-width: 240px;
     }
+    #game-modal .modal-container .modal-body #game-modal-body.price{
+        font-size: 30px;
+    }
+    #game-modal .modal-container .modal-body .game-modal-type{
+        font-size: 32px;
+        line-height: 15px;
+    }
+    #game-modal .modal-toy{
+        width: 100px;
+    }
+    #game-modal .modal-container .modal-body .game-modal-price{
+        font-size: 37px;
+        line-height: 26px;
+    }
 }
 
 
@@ -400,5 +426,20 @@
 @media (max-width: 425px) {
     .container-game .game {
         padding: 1rem 2rem 3rem 2rem;
+    }
+}
+
+@media (max-width: 385px) {
+    main .container-happy .happy-text{
+        font-size: 16px;
+    }
+    main .container-happy .happy-text div:after{
+        top: 13px;
+    }
+    footer .footer-nav{
+        font-size: 14px;
+    }
+    footer .btn{
+        font-size: 14px;
     }
 }

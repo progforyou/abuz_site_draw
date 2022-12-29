@@ -132,19 +132,19 @@ function createModalPrice(data) {
             copyD.addEventListener('click', async function (e) {
                 navigator.clipboard.writeText("HNY23-15")
             })
-            descriptionD.innerText = `Скопируй и введи в @ABUZZBOT в раздел “промокоды”`
+            descriptionD.innerText = `Скидка 15%! Скопируй и введи в @abuzz_buy_bot в раздел “промокоды”`
             takeD.innerText = "закрыть"
             break;
         case 2:
-            ticketD.classList.add("green")
-            typeD.innerText = "УРА !"
+            ticketD.classList.add("red")
+            typeD.innerText = "Поздравляем!"
             bodyD.innerText = "ТЫ  ВЫИГРАЛ"
             bodyD.classList.add("price")
             toyD.classList.add("price")
-            descriptionD.innerText = `Зайди в личный кабинет и проверь свой выигрыш`
-            takeD.innerText = "забрать"
+            descriptionD.innerText = `Скачай файл и пользуйся! Остались вопросы? Напиши в наш чат или в @abuzz_buy_bot`
+            takeD.innerText = "скачать"
             takeD.onclick = function () {
-                window.location = "/lk"
+                window.location = `/price/${data.price.data}`
             }
             break;
     }

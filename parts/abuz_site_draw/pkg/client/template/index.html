@@ -60,7 +60,7 @@
 </div>
 
 <div class="back-square">
-    <header>
+    <header id="top">
         <nav class="px-4 lg:px-6 py-6 relative">
             <div class="flex flex-wrap justify-between items-center mx-auto my-container">
                 <a href="/" class="flex container-brand">
@@ -68,38 +68,33 @@
                         <img src="../static/img/logo.png">
                     </div>
                 </a>
-                <div class="flex">
-                    <div class="hidden lg:flex justify-between items-center w-full flex lg:w-auto menu">
-                        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                            <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 item transition-colors mr-4">Информация</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Ответы на вопросы</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!--<button class="hidden lg:flex items-center border-2 buy transition-colors">
-                        <div class="m-auto flex">
-                            Войти в личный кабинет
-                        </div>
-                    </button>-->
-                    <script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuz_telegram_access_bot" data-size="large" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
-                    <!--<div class="tgme_widget_login medium nouserpic" id="widget_login">
-                        <button class="tgme_widget_login_button hidden lg:flex items-center border-2 buy transition-colors" onclick="return TWidgetLogin.auth();">
-                        <div class="m-auto flex">
-                            Войти в личный кабинет
-                        </div>
-                    </button>
-                    </div>-->
-
-                    <!--<script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuz_telegram_access_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>-->
+                <div class="justify-between items-center w-full hidden lg:flex lg:w-auto menu">
+                    <ul class="hidden lg:flex flex font-medium">
+                        <li>
+                            <a href="https://t.me/abuzz_university"
+                               class="block py-2 pr-4 pl-3 item transition-colors mr-4">Обучения 📕</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Новый год 🎄</a>
+                        </li>
+                        <li>
+                            <a href="https://t.me/zarabotay_info" class="block py-2 pr-4 pl-3 item transition-colors">Наши
+                                проекты 🤝</a>
+                        </li>
+                        <li>
+                            <a href="https://t.me/+7lpUpECEbgI0ODky"
+                               class="block py-2 pr-4 pl-3 item transition-colors">Отзывы 👩‍💻</a>
+                        </li>
+                    </ul>
                 </div>
+                <script async src="https://telegram.org/js/telegram-widget.js?21"
+                        data-telegram-login="abuz_telegram_access_bot" data-size="large" data-userpic="false"
+                        data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
                 <div class="block lg:hidden cursor-pointer" onclick="toggleMenu()" id="menu-toggler-div">
                     <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg"
                          id="menu-toggler">
-                        <path d="M3 3H27M3 11H11M3 19H19" stroke="white" stroke-width="5" stroke-linecap="round" id="menu-toggler-path"
+                        <path d="M3 3H27M3 11H11M3 19H19" stroke="white" stroke-width="5" stroke-linecap="round"
+                              id="menu-toggler-path"
                               stroke-linejoin="round"/>
                     </svg>
                 </div>
@@ -107,16 +102,19 @@
             <div class="hidden menu absolute menu-mobile" id="menu">
                 <ul class="flex flex-col font-medium">
                     <li>
-                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors mr-4">Обучения 📕</a>
+                        <a href="https://t.me/abuzz_university"
+                           class="block py-2 pr-4 pl-3 item transition-colors mr-4">Обучения 📕</a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Новый год 🎄</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Наши проекты 🤝</a>
+                        <a href="https://t.me/zarabotay_info" class="block py-2 pr-4 pl-3 item transition-colors">Наши
+                            проекты 🤝</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Отзывы 👩‍💻</a>
+                        <a href="https://t.me/+7lpUpECEbgI0ODky" class="block py-2 pr-4 pl-3 item transition-colors">Отзывы
+                            👩‍💻</a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 pr-4 pl-3 item transition-colors">Пользовательское соглашение
@@ -182,12 +180,12 @@
         </section>
 
         <marquee class="marquee" id="marquee">
-                <span class="mobile-flicker items-center">АБУЗ ПХ</span>
-                <span class="mobile-flicker items-center">АБУЗ ПП 2.0</span>
-                <span class="mobile-flicker items-center">АБУЗ БИРЖИ 2.0</span>
-                <span class="mobile-flicker items-center">АБУЗ ПП</span>
-                <span class="mobile-flicker items-center">ОБУЧЕНИЕ P2P</span>
-                <span class="mobile-flicker items-center">АБУЗ БУРЖ КАЗИНО</span>
+            <span class="mobile-flicker items-center">АБУЗ ПХ</span>
+            <span class="mobile-flicker items-center">АБУЗ ПП 2.0</span>
+            <span class="mobile-flicker items-center">АБУЗ БИРЖИ 2.0</span>
+            <span class="mobile-flicker items-center">АБУЗ ПП</span>
+            <span class="mobile-flicker items-center">ОБУЧЕНИЕ P2P</span>
+            <span class="mobile-flicker items-center">АБУЗ БУРЖ КАЗИНО</span>
         </marquee>
 
         <section class="container-game flex" id="reel">
@@ -237,7 +235,8 @@
                                 Осталось до следующей попытки
                             </div>
                             <div class="start-container mx-auto">
-                                <button class="start mt-2 mx-auto {{if not .Data.Logined}} disable {{end}}" id="start-mobile">
+                                <button class="start mt-2 mx-auto {{if not .Data.Logined}} disable {{end}}"
+                                        id="start-mobile">
                                     Начать
                                 </button>
                             </div>
@@ -267,7 +266,7 @@
                                 Осталось до следующей попытки
                             </div>
                             <div class="start-container mx-auto">
-                                <button class="start mt-2 mx-auto {{if not .Data.Logined}} disable {{end}}" id="start" >
+                                <button class="start mt-2 mx-auto {{if not .Data.Logined}} disable {{end}}" id="start">
                                     Начать
                                 </button>
                             </div>
@@ -536,7 +535,7 @@
                             <div class="text">
                                 <div class="top-text flex">
                                     <span class="name" style="color: #8A4928;">Никита</span>
-                                    <span class="role">модератор</span>
+                                    <span class="role">маркетолог</span>
                                 </div>
                                 <div class="body-text mt-2">
                                     Всем продуктивного года!
@@ -644,6 +643,33 @@
     </section>
 </div>
 
+<footer class="flex">
+    <div class="my-container flex align-center mx-auto">
+        <a href="/" class="hidden lg:flex container-brand">
+            <div class="self-center text-xl font-semibold whitespace-nowrap brand">
+                <img src="../static/img/logo.png">
+            </div>
+        </a>
+        <ul class="flex footer-nav">
+            <li class="hidden lg:block">
+                Пользовательское соглашение
+            </li>
+            <li>
+                Условия сотрудничества
+            </li>
+        </ul>
+        <button class="btn" onclick="toTop()">
+            <div>
+                Наверх
+            </div>
+            <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.60915 0.698463L0.662481 5.64513C0.553131 5.75358 0.466337 5.88262 0.407107 6.02479C0.347877 6.16696 0.317383 6.31945 0.317383 6.47346C0.317383 6.62748 0.347877 6.77996 0.407107 6.92213C0.466337 7.0643 0.553131 7.19334 0.662481 7.30179C0.88107 7.51909 1.17676 7.64105 1.48498 7.64105C1.7932 7.64105 2.08889 7.51909 2.30748 7.30179L6.43748 3.1718L10.5675 7.30179C10.7861 7.51909 11.0818 7.64105 11.39 7.64105C11.6982 7.64105 11.9939 7.51909 12.2125 7.30179C12.3206 7.19278 12.4062 7.0635 12.4642 6.92135C12.5223 6.77921 12.5517 6.627 12.5508 6.47346C12.5517 6.31992 12.5223 6.16771 12.4642 6.02557C12.4062 5.88343 12.3206 5.75414 12.2125 5.64513L7.26581 0.698463C7.15736 0.589113 7.02832 0.50232 6.88615 0.44309C6.74398 0.383859 6.59149 0.353365 6.43748 0.353365C6.28347 0.353365 6.13098 0.383859 5.98881 0.44309C5.84664 0.50232 5.7176 0.589113 5.60915 0.698463Z" fill="#86868B"/>
+            </svg>
+
+        </button>
+    </div>
+</footer>
+
 <img src="../static/img/left-garland.png" alt="garland" class="left-garland body-garland">
 <img src="../static/img/right-garland.png" alt="garland" class="right-garland body-garland">
 
@@ -659,6 +685,10 @@
         menu.style.top = "19px"
         menu.style.right = "19px"
         menu.style.marginRight = "0"
+    }
+
+    function toTop() {
+        window.location.href = "/#top"
     }
 </script>
 <script>
