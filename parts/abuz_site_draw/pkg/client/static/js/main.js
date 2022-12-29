@@ -1,5 +1,3 @@
-let currentPosition = 1
-
 async function onTelegramAuth(user) {
     let t = [], ts = ""
     let user_new = {...user}
@@ -22,43 +20,6 @@ async function onTelegramAuth(user) {
         window.location.href = "/lk"
     }
 }
-
-document.getElementById("horizontal-scroller")
-    .addEventListener('wheel', function (event) {
-        if (event.deltaMode === event.DOM_DELTA_PIXEL) {
-            var modifier = 1;
-            // иные режимы возможны в Firefox
-        } else if (event.deltaMode === event.DOM_DELTA_LINE) {
-            var modifier = parseInt(getComputedStyle(this).lineHeight);
-        } else if (event.deltaMode === event.DOM_DELTA_PAGE) {
-            var modifier = this.clientHeight;
-        }
-        if (event.deltaY !== 0) {
-            // замена вертикальной прокрутки горизонтальной
-            if (window.innerWidth <= 992) {
-                if (event.deltaY < 0) currentPosition += 1;
-                else currentPosition -= 1;
-
-                if (currentPosition < 1) currentPosition = 5
-                if (currentPosition > 5) currentPosition = 1
-
-                this.scrollLeft = (currentPosition - 1) * this.offsetWidth
-                console.log(currentPosition)
-                for (let i = 1; i <= 5; i++) {
-                    let item = document.getElementById(`scroll-ellips-${i}`)
-                    if (i === currentPosition) {
-                        item.classList.add("active")
-                    } else {
-                        item.classList.remove("active")
-                    }
-                }
-
-            } else {
-                this.scrollLeft += modifier * event.deltaY;
-            }
-            event.preventDefault();
-        }
-    });
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -148,26 +109,6 @@ function createModalPrice(data) {
             }
             break;
     }
-    /*if (data.price.win) {
-        ticketD.classList.add("red")
-        typeD.innerText = "УРА !"
-        bodyD.innerText = "ТЫ  ВЫИГРАЛ"
-        bodyD.classList.add("promo")
-        toyD.classList.add("promo")
-        descriptionD.innerText = `Зайди в личный кабинет и проверь свой выигрыш`
-        takeD.innerText = "забрать"
-        takeD.onclick = function () {
-            window.location = "/lk"
-        }
-    } else {
-        ticketD.classList.add("green")
-        typeD.innerText = "УВЫ :("
-        bodyD.innerText = data.price.data
-        bodyD.classList.add("none")
-        toyD.classList.add("none")
-        descriptionD.innerText = "Попробуй в следующий раз!"
-        takeD.innerText = "закрыть"
-    }*/
     let modal = document.getElementById("game-modal")
     modal.style.display = "block"
 }
