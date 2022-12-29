@@ -159,6 +159,7 @@ func TestGeneratePrice(db *gorm.DB) Price {
 			rand.Seed(time.Now().Unix())
 			objP = allObj[rand.Intn(len(allObj))]
 		} else {
+			obj.Type = NonePrice
 			obj.Data = "ТЫ НЕ ВЫИГРАЛ"
 			break
 		}
@@ -174,6 +175,7 @@ func TestGeneratePrice(db *gorm.DB) Price {
 			rand.Seed(time.Now().Unix())
 			objP = allObj[rand.Intn(len(allObj))]
 		} else {
+			obj.Type = NonePrice
 			obj.Data = "ТЫ НЕ ВЫИГРАЛ"
 			break
 		}
