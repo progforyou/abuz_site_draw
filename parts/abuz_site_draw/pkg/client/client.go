@@ -18,6 +18,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -662,6 +663,13 @@ func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 			w.Write(([]byte)(err.Error()))
 			return
 		}
+		_, err = f.WriteString(writeFilePrice(dataP.Data, dataP.Path))
+		if err != nil {
+			w.WriteHeader(500)
+			log.Error().Err(err).Msg("error change file")
+			w.Write(([]byte)(err.Error()))
+			return
+		}
 		f.Close()
 	}
 	streamFileBytes, err := ioutil.ReadFile(path)
@@ -870,4 +878,18 @@ func compareHash(login LoginRequest, c *data.Controllers) bool {
 	mac.Write([]byte(login.HashData))
 	hm := mac.Sum(nil)
 	return fmt.Sprintf("%x", hm) == login.Hash
+}
+
+func writeFilePrice(data, path string) string {
+	var res string
+	if path == "socks.txt" {
+		res = "200 ру сокс индивидуальные\n"
+	} else {
+		res += fmt.Sprintf("%s\n", strings.Split(path, ".txt")[0])
+	}
+	if path == "почта.txt" {
+		res = "Кодовое слово: Деньги\n"
+	}
+	res += fmt.Sprintf("%s\n", data)
+	return res
 }

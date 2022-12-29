@@ -87,7 +87,7 @@ func NewPriceController(db *gorm.DB, baseLog zerolog.Logger) PriceController {
 			}
 			var obj PriceBase
 			str := fmt.Sprintf("%s-%d", filepath.Base(path), i)
-			obj.Key = base64.StdEncoding.EncodeToString([]byte(str))
+			obj.Key = strings.Replace(base64.StdEncoding.EncodeToString([]byte(str)), "/", "H", -1)
 			obj.Data = s
 			obj.Path = filepath.Base(path)
 			db.Create(&obj)
@@ -188,6 +188,7 @@ func TestGeneratePrice(db *gorm.DB) Price {
 }
 
 func randPrice() PriceType {
+	return Present
 	rand.Seed(time.Now().Unix())
 	v := randInt(1, 100)
 	if v > 0 && v <= 50 {
