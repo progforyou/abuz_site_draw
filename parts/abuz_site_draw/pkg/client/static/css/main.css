@@ -799,7 +799,7 @@ main .flicker.item-6 {
 
 footer{
     background: #0a0a0a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 40px;
     padding-bottom: 30px;
 }
