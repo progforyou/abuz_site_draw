@@ -352,6 +352,15 @@ main .flicker.item-6 {
     max-width: 935px;
 }
 
+.container-game .game .close-game{
+    position: absolute;
+    z-index: 10000;
+    top: 5rem;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
 .container-game .game .info-block {
     position: absolute;
     padding: .5rem;

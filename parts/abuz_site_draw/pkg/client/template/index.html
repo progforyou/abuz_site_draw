@@ -211,6 +211,7 @@
                     </div>
                 </div>
                 <div class="game flex flex-wrap mx-auto">
+                    {{if isEnd}}<img src="../static/img/close.png" class="close-game">{{end}}
                     <div class="info-block">
                         Акция продлится <br> до <br> 03.01.2023 18:00
                     </div>
@@ -235,7 +236,7 @@
                                 Осталось до следующей попытки
                             </div>
                             <div class="start-container mx-auto">
-                                <button class="start mt-2 mx-auto {{if not .Data.Logined}} disable {{end}}"
+                                <button class="start mt-2 mx-auto {{if isEnd}} disable {{end}} {{if not .Data.Logined}} disable {{end}}"
                                         id="start-mobile">
                                     Начать
                                 </button>
@@ -266,7 +267,7 @@
                                 Осталось до следующей попытки
                             </div>
                             <div class="start-container mx-auto">
-                                <button class="start mt-2 mx-auto {{if not .Data.Logined}} disable {{end}}" id="start">
+                                <button class="start mt-2 mx-auto {{if isEnd}} disable {{end}} {{if not .Data.Logined}} disable {{end}}" id="start">
                                     Начать
                                 </button>
                             </div>
@@ -274,9 +275,9 @@
                     </div>
 
                 </div>
-                <div class="flex mt-12 terms-section">
+                <a href="https://telegra.ph/Pravila-povedeniya-v-kulturnom-meste-12-29" target="_blank" class="flex mt-12 terms-section">
                     <img src="../static/img/cat.png"><span>Условия акции*</span>
-                </div>
+                </a>
             </div>
         </section>
     </main>
@@ -667,10 +668,12 @@
 <script>
     let endTime,
         can,
-        logined
+        logined,
+        endGame
     can = {{.Data.Can}}
     logined = {{.Data.Logined}}
     baned = {{.Data.Ban}}
+    endGame = {{isEnd}}
     if (!can) {
         endTime = new Date("{{.Data.Timer}}")
     }

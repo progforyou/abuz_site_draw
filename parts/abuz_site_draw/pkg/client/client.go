@@ -66,6 +66,9 @@ type DataAdminGet struct {
 }
 
 //const IP = "127.0.0.1"
+/*var END, _ = time.Parse("2006-01-02T15:04:05.000Z", "2023-01-03T18:00:00.000Z")*/
+
+var END = time.Date(2023, time.January, 3, 18, 0, 0, 0, time.Local)
 
 func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 	log.Info().Msg("create page controller")
@@ -98,6 +101,9 @@ func NewController(db *gorm.DB, r *chi.Mux, c *data.Controllers) error {
 			w.WriteHeader(500)
 			log.Error().Err(err).Msg("fail to get")
 			w.Write(([]byte)(err.Error()))
+			return
+		}
+		if isEnd() {
 			return
 		}
 		if dataU.Ban {
@@ -858,8 +864,12 @@ func isMoney(dataU data.Price) bool {
 	return dataU.Type == data.Money10 || dataU.Type == data.Money100 || dataU.Type == data.Money5
 }
 
+func isEnd() bool {
+	return time.Now().UnixNano() >= END.UnixNano()
+}
+
 func Render(templateByte []byte, data interface{}) ([]byte, error) {
-	funcMap := map[string]interface{}{"mkSlice": mkSlice, "dateFormat": dateFormat, "getPrices": getPrices, "isMoney": isMoney}
+	funcMap := map[string]interface{}{"mkSlice": mkSlice, "dateFormat": dateFormat, "getPrices": getPrices, "isMoney": isMoney, "isEnd": isEnd}
 	t, err := template.New("").Funcs(funcMap).Parse(string(templateByte))
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create template")
