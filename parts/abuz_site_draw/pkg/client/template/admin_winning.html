@@ -143,10 +143,10 @@
                             </a>
                         </div>
                         <div>
-                                <span class="red cursor-pointer" onclick="ban({{.Telegram}})">
+                                <span class="red cursor-pointer" onclick="ban('{{.Telegram}}')">
                                     Забанить
                                 </span>
-                            <span class="green mt-2 cursor-pointer" onclick="unban({{.Telegram}})">
+                            <span class="green mt-2 cursor-pointer" onclick="unban('{{.Telegram}}')">
                                     Разбанить
                                 </span>
                         </div>
@@ -171,6 +171,21 @@
 
 </div>
 <script>
+    async function ban(tg) {
+        const rawResponse = await fetch(`/admin/ban/${tg}`, {
+            method: 'GET',
+        });
+        const content = await rawResponse.text();
+        console.log(content)
+    }
+
+    async function unban(tg) {
+        const rawResponse = await fetch(`/admin/unban/${tg}`, {
+            method: 'GET',
+        });
+        const content = await rawResponse.text();
+        console.log(content)
+    }
     function openIps(id) {
         fetch(`/admin/ips/${id}`, {
             method: 'GET'
