@@ -162,7 +162,7 @@ func NewPriceController(db *gorm.DB, baseLog zerolog.Logger) PriceController {
 	//Money100Base
 	var obj Money100Base
 	obj.Key = base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%d-money100-base", 0)))
-	obj.Data = "https://t.me/CryptoBot?start=CQh5GFqON6ET"
+	obj.Data = "https://t.me/CryptoBot?start=CQZoido1MzBn"
 	db.Create(&obj)
 	return PriceController{
 		GetPromo: func(key string) (PromoBase, error) {
@@ -303,7 +303,6 @@ func TestGeneratePrice(db *gorm.DB) Price {
 }
 
 func randPrice() PriceType {
-	return Money100
 	rand.Seed(time.Now().Unix())
 	v := randInt(1, 50000)
 	if v == 50000 {
