@@ -25,9 +25,9 @@ var (
 	ws            string
 )
 
-//TODO 8000
+// TODO 8000
 func init() {
-	flag.IntVar(&port, "port", 80, "set port")
+	flag.IntVar(&port, "port", 8000, "set port")
 	flag.StringVar(&telegramToken, "token", "5922829007:AAHFF6qFi0t4eVQvPuGp_F6p6g18lvrsAcw", "set telegram token")
 	flag.StringVar(&ws, "ws", "127.0.0.1", "set website domain")
 	flag.Parse()
