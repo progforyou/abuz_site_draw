@@ -593,7 +593,7 @@ func rewardPromo(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 		w.Write(([]byte)(err.Error()))
 		return
 	}
-	dataP, err := c.Price.GetPromo(dataR.Data)
+	dataP, err := c.Price.GetPromo(dataR.Hash)
 	w.Write([]byte(dataP.Data))
 }
 
@@ -652,7 +652,7 @@ func rewardPrice(db *gorm.DB, w http.ResponseWriter, r *http.Request, c *data.Co
 		w.Write(([]byte)(err.Error()))
 		return
 	}
-	dataP, err := c.Price.GetPrice(dataR.Data)
+	dataP, err := c.Price.GetPrice(dataR.Hash)
 	filename := fmt.Sprintf("%s.txt", dataP.Key)
 	path := filepath.Join("temp", filename)
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
@@ -854,8 +854,12 @@ func getPrices(dataU data.User) bool {
 	return false
 }
 
+func isMoney(dataU data.Price) bool {
+	return dataU.Type == data.Money10 || dataU.Type == data.Money100 || dataU.Type == data.Money5
+}
+
 func Render(templateByte []byte, data interface{}) ([]byte, error) {
-	funcMap := map[string]interface{}{"mkSlice": mkSlice, "dateFormat": dateFormat, "getPrices": getPrices}
+	funcMap := map[string]interface{}{"mkSlice": mkSlice, "dateFormat": dateFormat, "getPrices": getPrices, "isMoney": isMoney}
 	t, err := template.New("").Funcs(funcMap).Parse(string(templateByte))
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create template")

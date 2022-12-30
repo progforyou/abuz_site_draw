@@ -407,11 +407,16 @@
         line-height: 15px;
     }
     #game-modal .modal-toy{
-        width: 100px;
+        width: 100px !important;
     }
     #game-modal .modal-container .modal-body .game-modal-price{
         font-size: 37px;
         line-height: 26px;
+    }
+    #game-modal .modal-container .modal-body #game-modal-body.money5,
+    #game-modal .modal-container .modal-body #game-modal-body.money10,
+    #game-modal .modal-container .modal-body #game-modal-body.money100{
+        font-size: 50px;
     }
 }
 

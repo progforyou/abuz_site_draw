@@ -67,7 +67,7 @@ type User struct {
 
 var Admins = []string{"nikolay35977", "ddduduru", "sempai6", "fack_system", "dappless", "m1o2u3s4e5", "MakerD"}
 
-const TIME = 24
+const TIME = 5
 
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	u.Admin = hasIsArrayStr(Admins, u.Telegram)
@@ -227,7 +227,7 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				return Price{}, err
 			}
 			for _, price := range obj.Prices {
-				if price.Data == hash {
+				if price.Hash == hash {
 					return price, nil
 				}
 			}

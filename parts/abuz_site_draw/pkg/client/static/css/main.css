@@ -667,7 +667,7 @@ main .flicker.item-6 {
     line-height: 33px;
     color: var(--color-black);
     text-shadow: 0 0 6px #2400FF;
-    margin-top: 2.7rem;
+    margin-top: 1rem;
 }
 
 #game-modal .modal-container .modal-body .game-modal-price .modal-copy {
@@ -679,20 +679,44 @@ main .flicker.item-6 {
 #game-modal .modal-container .modal-body #game-modal-body.sale {
     text-shadow: 0 0 6px #2400FF;
     font-size: 30px;
+    line-height: 25px;
+    margin-top: 1rem;
 }
 
 #game-modal .modal-container .modal-body #game-modal-body.price{
     text-shadow: 0 0 6px #19B301;
     font-size: 45px;
+    line-height: 45px;
+}
+
+#game-modal .modal-container .modal-body #game-modal-body.money5{
+    text-shadow: 0 0 6px #FFF500;
+    font-size: 100px;
+    line-height: 85px;
+}
+
+#game-modal .modal-container .modal-body #game-modal-body.money10{
+    text-shadow: 0 0 6px #FF7A00;
+    font-size: 100px;
+    line-height: 85px;
+}
+
+#game-modal .modal-container .modal-body #game-modal-body.money100{
+    color: #0066FF;
+    text-shadow: 0 0 6px #001AFF;
+    font-size: 100px;
+    line-height: 85px;
 }
 
 #game-modal .modal-container .modal-body #game-modal-body.promo {
     text-shadow: 0 0 6px #19B301;
+    line-height: 45px;
 }
 
 #game-modal .modal-container .modal-body #game-modal-body.none {
     font-size: 40px;
     text-shadow: 0 0 6px #FF0000;
+    margin-top: 1.5rem;
 }
 
 #game-modal .modal-container .modal-body .game-modal-description {
@@ -739,10 +763,23 @@ main .flicker.item-6 {
 }
 
 #game-modal .modal-toy.promo,
-#game-modal .modal-toy.price{
+#game-modal .modal-toy.price,
+#game-modal .modal-toy.money5{
     bottom: 2rem;
     right: -3.2rem;
     transform: rotate(-34.92deg);
+}
+
+#game-modal .modal-toy.money10{
+    transform: rotate(-19.92deg);
+    bottom: -1rem;
+    right: -1.4rem;
+}
+
+#game-modal .modal-toy.money100{
+    transform: rotate(-4.92deg);
+    width: 150px;
+    right: -1rem;
 }
 
 #game-modal .modal-ticket {

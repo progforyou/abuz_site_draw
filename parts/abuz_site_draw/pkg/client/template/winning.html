@@ -13,7 +13,7 @@
         <div>
             <a class="flex container-brand">
                     <div class="self-center text-xl font-semibold whitespace-nowrap brand">
-                        <img src="../static/img/logo.png">
+                        <img src="/static/img/logo.png">
                     </div>
                 </a>
         </div>
@@ -86,13 +86,17 @@
                                 </span>
                             </div>
                             <div>
-                                {{if .Win}} {{if eq .Type 1}} Промокод {{end}} {{if eq .Type 2}} Подарок {{end}} {{else}} - {{end}}
+                                {{if .Win}} {{if eq .Type 1}} Промокод {{end}} {{if eq .Type 2}} Подарок {{end}} {{if eq .Type 3}} 5$ {{end}} {{if eq .Type 4}} 10$ {{end}} {{if eq .Type 5}} 100$ {{end}} {{else}} - {{end}}
                             </div>
                             <div>
                                 {{dateFormat .Date}}
                             </div>
                             <div>
-                                {{if .Win}} <a href="/{{if eq .Type 1}}promo{{end}}{{if eq .Type 2}}price{{end}}/{{.Data}}">Забрать</a> {{else}} - {{end}}
+                                {{if isMoney .}}
+                                -
+                                {{else}}
+                                {{if .Win}} <a href="/{{if eq .Type 1}}promo{{end}}{{if eq .Type 2}}price{{end}}/{{.Hash}}">Забрать</a> {{else}} - {{end}}
+                                {{end}}
                             </div>
                         </div>
                     {{ end }}

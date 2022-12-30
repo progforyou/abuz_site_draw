@@ -86,12 +86,12 @@ function createModalPrice(data) {
         case 1:
             ticketD.classList.add("red")
             typeD.innerText = "Промокод"
-            bodyD.innerText = "HNY23-15"
+            bodyD.innerText = data.price.data
             bodyD.classList.add("promo")
             toyD.classList.add("promo")
             copyD.style.display = "block"
             copyD.addEventListener('click', async function (e) {
-                navigator.clipboard.writeText("HNY23-15")
+                navigator.clipboard.writeText(data.price.data)
             })
             descriptionD.innerText = `Скидка 15%! Скопируй и введи в @abuzz_buy_bot в раздел “промокоды”`
             takeD.innerText = "закрыть"
@@ -105,7 +105,43 @@ function createModalPrice(data) {
             descriptionD.innerText = `Скачай файл и пользуйся! Остались вопросы? Напиши в наш чат или в @abuzz_buy_bot`
             takeD.innerText = "скачать"
             takeD.onclick = function () {
-                window.location = `/price/${data.price.data}`
+                window.location = `/price/${data.price.hash}`
+            }
+            break;
+        case 3:
+            ticketD.classList.add("red")
+            typeD.innerText = "Поздравляем!"
+            bodyD.innerText = "5$"
+            bodyD.classList.add("money5")
+            toyD.classList.add("money5")
+            descriptionD.innerText = `Нажми забрать чтобы получить приз!`
+            takeD.innerText = "забрать"
+            takeD.onclick = function () {
+                window.location = data.price.data
+            }
+            break;
+        case 4:
+            ticketD.classList.add("red")
+            typeD.innerText = "Поздравляем!"
+            bodyD.innerText = "10$"
+            bodyD.classList.add("money10")
+            toyD.classList.add("money10")
+            descriptionD.innerText = `Нажми забрать чтобы получить приз!`
+            takeD.innerText = "забрать"
+            takeD.onclick = function () {
+                window.location = data.price.data
+            }
+            break;
+        case 5:
+            ticketD.classList.add("red")
+            typeD.innerText = "Поздравляем!"
+            bodyD.innerText = "100$"
+            bodyD.classList.add("money100")
+            toyD.classList.add("money100")
+            descriptionD.innerText = `Нажми забрать чтобы получить приз!`
+            takeD.innerText = "забрать"
+            takeD.onclick = function () {
+                window.location = data.price.data
             }
             break;
     }
