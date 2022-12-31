@@ -184,7 +184,9 @@ func NewUserController(db *gorm.DB, baseLog zerolog.Logger) UserController {
 				return nil
 			}
 			obj.Telegram = tg
-			db.Create(&obj)
+			if err := db.Create(&obj).Error; err != nil {
+				db.Where("telegram = ?", tg).Find(&obj)
+			}
 			o.UserRefer = uint(obj.ID)
 			if err := db.Save(&o).Error; err != nil {
 				return err

@@ -41,8 +41,10 @@ async function getPrice(e) {
         body: JSON.stringify({})
     });
     const content = await rawResponse.json();
-    initializeClock("game-time", content.timer)
-    initializeClock("game-time-mobile", content.timer)
+    var arr = content.timer.split(/\D/);
+    let endTime = new Date(`${arr[0]}-${arr[1]}-${arr[2]}T${arr[3]}:${arr[4]}:${arr[5]}Z`);
+    initializeClock("game-time", endTime)
+    initializeClock("game-time-mobile", endTime)
     await sleep(500);
     for (let i = 0; i < ids.length; i++) {
         let item = document.getElementById(ids[i])

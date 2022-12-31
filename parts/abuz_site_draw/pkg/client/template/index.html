@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../static/css/index.css">
 </head>
-<body>
+<body style="overflow-x: hidden">
 
 <div class="relative" id="game-modal" style="display: none; z-index: 1000;" aria-labelledby="modal-title" role="dialog">
 
@@ -87,9 +87,7 @@
                         </li>
                     </ul>
                 </div>
-                <script async src="https://telegram.org/js/telegram-widget.js?21"
-                        data-telegram-login="abuz_telegram_access_bot" data-size="large" data-userpic="false"
-                        data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+                <script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="abuzzishe_tg_bot" data-size="large" data-userpic="false" data-onauth="onTelegramAuth(user)"></script>
                 <div class="block lg:hidden cursor-pointer" onclick="toggleMenu()" id="menu-toggler-div">
                     <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg"
                          id="menu-toggler">
@@ -188,7 +186,7 @@
             <span class="mobile-flicker items-center">АБУЗ БУРЖ КАЗИНО</span>
         </marquee>
 
-        <section class="container-game flex" id="reel">
+        <section class="container-game flex" style="overflow-x: hidden" id="reel">
             <div class="game-toy game-toy-ellipse-left"></div>
             <div class="game-toy game-toy-ellipse-right"></div>
             <img class="game-toy game-toy-left" src="../static/img/toy.png" alt="toy">
@@ -675,7 +673,8 @@
     baned = {{.Data.Ban}}
     endGame = {{isEnd}}
     if (!can) {
-        endTime = new Date("{{.Data.Timer}}")
+        var arr = "{{.Data.Timer}}".split(/\D/);
+        endTime = new Date(`${arr[0]}-${arr[1]}-${arr[2]}T${arr[3]}:${arr[4]}:${arr[5]}Z`);
     }
 </script>
 <script src="../static/js/main.js"></script>
